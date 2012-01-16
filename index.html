@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+	<head>
+		<title>Place of Serenity</title>
+		<link rel="icon" type="image/x-icon" href="images/favicon.ico">
+		<link rel="stylesheet" href="css/main.css">
+		<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" src="js/jquery.promptumenu.js"></script>
+	</head>
+	<body>
+		<div id="impress" class="impress-not-supported">
+			<div id="hello" class="step" data-x="0" data-y="0">
+				<center>
+					<ul class="main-menu">
+						<li><a href="#ego"><img src="images/Contact.png" alt="" width="80" height="80" /><br/>ego</a></li>
+						<li><a href="#ignotus"><img src="images/sin[i]*sin[z*i].png" alt="" width="80" height="80" /><br/>ignotus</a></li>
+						<li><a href="#meh"><img src="images/meh.png" alt="" width="112" height="80" /><br/>meh</a></li>
+					</ul>
+				</center>
+			</div>
+			<div id="ego" class="step slide" data-x="-2000" data-y="1000" data-z="200" data-rotate-x="90">
+				<h1>hi.</h1>
+				<p id="egofirst">My name's Dan. I do what I do, and I think what I think so anything that happens is a result of my humanity.</p>
+				<p id="egosecond">I currently attend college.</p>
+				<p id="egothird">I'm currently 17 years old</p>
+			</div>
+			<div id="ignotus" class="step slide" data-x="0" data-y="1000" data-z="200" data-rotate-x="90">
+				<h1>Hrm...</h1>
+				<div id="learning">
+					<ul><p>What I want to learn...</p>
+						<li>Latin</li>
+						<li>Italian</li>
+						<li>Assembly Code</li>
+					</ul>
+				</div>
+				<!--<img id="firstsep" src="images/block.png" width="2" height="200" border="0" />
+				<img id="secondsep" src="images/block.png" width="2" height="200" border="0" />-->
+				<div id="knowledge">
+					<ul><p>What I know....</p>
+						<li>Calculus I+II</li>
+						<li>Various programming languages...<br/><span id="disclaimer">(No formal education yet)</span></li>
+						<li id="up">Unix systems</li>
+						<li id="up">How to not make friends... :P</li>
+					</ul>
+				</div>
+				<p id="howare">So... hello, how are you?</p>
+			</div>
+			<div id="meh" class="step slide" data-x="2000" data-y="1000" data-z="200" data-rotate-x="90">
+				<h1>meh...</h1>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		$(function(){
+			$('.main-menu').promptumenu({'width':120, 'height':160, 'rows': 1, 'columns': 1, 'direction': 'horizontal', 'pages': true,'inertia':false });
+		});
+	</script>
+	<script src="js/impress.js"></script>
+</html>
