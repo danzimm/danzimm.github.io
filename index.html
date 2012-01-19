@@ -52,7 +52,8 @@
 			document.getElementById("hint").style.opacity=1;
 		});
 		$('#hint').mouseout(function() {
-			document.getElementById("hint").style.opacity=0;
+			if (!isMobile)
+				document.getElementById("hint").style.opacity=0;
 		});
 		$('#rightArrow').mouseover(function() {
 			document.getElementById("rightArrow").style.opacity=1;
