@@ -33,6 +33,14 @@
 				<h1>meh...</h1>
 			</div>
 		</div>
+		<div id="hint">
+			<h2>Use arrow keys or on screen arrows and icons to navigate...</h2>
+		</div>
+		<img src="images/arrow-right.png" class="arrow" id="rightArrow"/>
+		<img src="images/arrow-left.png" class="arrow" id="leftArrow"/>
+		<center>
+			<img src="images/arrow-up.png" class="arrow" id="upArrow"/>
+		</center>
 	</body>
 	<script type="text/javascript">
 		$(function(){
@@ -40,4 +48,40 @@
 		});
 	</script>
 	<script src="js/impress.js"></script>
+	<script type="text/javascript">
+		$('#hint').mouseover(function() {
+			document.getElementById("hint").style.opacity=1;
+		});
+		$('#hint').mouseout(function() {
+			document.getElementById("hint").style.opacity=0;
+		});
+		$('#rightArrow').mouseover(function() {
+			document.getElementById("rightArrow").style.opacity=1;
+		});
+		$('#rightArrow').mouseout(function() {
+			document.getElementById("rightArrow").style.opacity=0;
+		});
+		$('#leftArrow').mouseover(function() {
+			document.getElementById("leftArrow").style.opacity=1;
+		});
+		$('#leftArrow').mouseout(function() {
+			document.getElementById("leftArrow").style.opacity=0;
+		});
+		$(document).ready(function() {
+			setTimeout(function(){
+				document.getElementById("hint").style.opacity=0;
+				document.getElementById("rightArrow").style.opacity=0;
+				document.getElementById("leftArrow").style.opacity=0;
+				document.getElementById("upArrow").style.opacity=0;
+			}, 1500);
+		});
+		$('#upArrow').mouseover(function() {
+			if (!isOnMenu)
+				document.getElementById("upArrow").style.opacity=1;
+		});
+		$('#upArrow').mouseout(function() {
+			document.getElementById("upArrow").style.opacity=0;
+		});
+		
+	</script>
 </html>

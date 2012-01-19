@@ -92,8 +92,8 @@
     // CHECK SUPPORT
     
     var ua = navigator.userAgent.toLowerCase();
-    var impressSupported = ( pfx("perspective") != null ) &&
-                           ( ua.search(/(iphone)|(ipod)|(ipad)|(android)/) == -1 );
+    var impressSupported = ( pfx("perspective") != null );/* &&
+                           ( ua.search(/(iphone)|(ipod)|(ipad)|(android)/) == -1 );*/
     
     // DOM ELEMENTS
     
@@ -259,9 +259,37 @@
     
     // EVENTS
     
+	var goRight = function() {
+        var next = active;
+		newCell = cells.current_page+1;
+		if(newCell > cells.pages)
+			newCell = 1;
+		domCells[0].methods.go_to(newCell);
+		if (steps.indexOf(next) != 0) {
+			//yes
+			next = steps[newCell];
+						
+		}
+		return next;
+	};
+	
+	var goLeft = function() {
+        var next = active;
+		newCell = cells.current_page-1;
+		if(newCell < 1)
+			newCell = cells.pages;
+		domCells[0].methods.go_to(newCell);
+		if (steps.indexOf(next) != 0) {
+			//yes
+			next = steps[newCell];
+						
+		}
+		return next;
+	};
+	
     document.addEventListener("keydown", function ( event ) {
         if ( event.keyCode == 9 || ( event.keyCode >= 32 && event.keyCode <= 34 ) || (event.keyCode >= 37 && event.keyCode <= 40) ) {
-            var next = active;
+	        var next = active;
             switch( event.keyCode ) {
                 //case 33: ; // pg up
                 //case 37: ; // left
@@ -279,27 +307,10 @@
 						}
                         break; 
 				case 39:
-						newCell = cells.current_page+1;
-						if(newCell > cells.pages)
-							newCell = 1;
-						domCells[0].methods.go_to(newCell);
-						if (steps.indexOf(next) != 0) {
-							//yes
-							next = steps[newCell];
-						
-						}
-						
+						next = goRight();
 						break;
 				case 37:
-						newCell = cells.current_page-1;
-						if(newCell < 1)
-							newCell = cells.pages;
-						domCells[0].methods.go_to(newCell);
-						if (steps.indexOf(next) != 0) {
-							//yes
-							next = steps[newCell];
-						
-						}
+						next = goLeft();
 						break;
 				
             }
@@ -309,6 +320,22 @@
             event.preventDefault();
         }
     }, false);
+	
+	byId("rightArrow").addEventListener("click", function(event) {
+		select(goRight());
+        event.preventDefault();
+	});
+	byId("leftArrow").addEventListener("click", function(event) {
+		select(goLeft());
+        event.preventDefault();
+	});
+	byId("upArrow").addEventListener("click", function(event) {
+		if (byId("upArrow").style.opacity != 0) {
+			select(steps[0]);
+			event.preventDefault();
+		}
+	});
+	
 
     document.addEventListener("click", function ( event ) {
         // event delegation with "bubbling"
@@ -354,7 +381,9 @@
     // START 
     // by selecting step defined in url or first step of the presentation
     select(getElementFromUrl() || steps[0]);
-	cells.current_page = steps.indexOf(active);
+	anI = steps.indexOf(active);
+	if (anI != 0)
+		cells.current_page = anI;
 
 })(document, window);
 
