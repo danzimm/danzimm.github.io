@@ -190,6 +190,18 @@ body {
 	transition: all 300ms ease-in-out;
 }
 
+#downArrow {
+	position:relative;
+	bottom:0px;
+	margin:auto;
+	z-index: 100;
+	opacity: 1;
+	-webkit-transition: all 300ms ease-in-out;
+	-moz-transition: all 300ms ease-in-out;
+	-o-transition: all 300ms ease-in-out;
+	transition: all 300ms ease-in-out;
+}
+
 
 #up {
 	position:relative;
