@@ -10,6 +10,7 @@
  */
  
  var isOnMenu = false;
+ var isMobile = false;
 
 (function ( document, window ) {
 
@@ -95,6 +96,8 @@
     var impressSupported = ( pfx("perspective") != null );/* &&
                            ( ua.search(/(iphone)|(ipod)|(ipad)|(android)/) == -1 );*/
     
+	isMobile = ( ua.search(/(iphone)|(ipod)|(ipad)|(android)/) != -1 );
+	
     // DOM ELEMENTS
     
     var impress = byId("impress");

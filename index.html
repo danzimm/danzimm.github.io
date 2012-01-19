@@ -58,28 +58,33 @@
 			document.getElementById("rightArrow").style.opacity=1;
 		});
 		$('#rightArrow').mouseout(function() {
-			document.getElementById("rightArrow").style.opacity=0;
+			if (!isMobile)
+				document.getElementById("rightArrow").style.opacity=0;
 		});
 		$('#leftArrow').mouseover(function() {
 			document.getElementById("leftArrow").style.opacity=1;
 		});
 		$('#leftArrow').mouseout(function() {
-			document.getElementById("leftArrow").style.opacity=0;
+			if (!isMobile)
+				document.getElementById("leftArrow").style.opacity=0;
 		});
 		$('#downArrow').mouseover(function() {
 			if (isOnMenu)
 				document.getElementById("downArrow").style.opacity=1;
 		});
 		$('#downArrow').mouseout(function() {
-			document.getElementById("downArrow").style.opacity=0;
+			if (!isMobile)
+				document.getElementById("downArrow").style.opacity=0;
 		});
 		$(document).ready(function() {
 			setTimeout(function(){
-				document.getElementById("hint").style.opacity=0;
-				document.getElementById("rightArrow").style.opacity=0;
-				document.getElementById("leftArrow").style.opacity=0;
-				document.getElementById("upArrow").style.opacity=0; 
-				document.getElementById("downArrow").style.opacity=0;
+				if (!isMobile) {
+					document.getElementById("hint").style.opacity=0;
+					document.getElementById("rightArrow").style.opacity=0;
+					document.getElementById("leftArrow").style.opacity=0;
+					document.getElementById("upArrow").style.opacity=0; 
+					document.getElementById("downArrow").style.opacity=0;
+				}
 			}, 1500);
 		});
 		$('#upArrow').mouseover(function() {
@@ -87,7 +92,8 @@
 				document.getElementById("upArrow").style.opacity=1;
 		});
 		$('#upArrow').mouseout(function() {
-			document.getElementById("upArrow").style.opacity=0;
+			if (!isMobile)
+				document.getElementById("upArrow").style.opacity=0;
 		});
 		
 	</script>
