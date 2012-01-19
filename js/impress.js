@@ -380,9 +380,6 @@
     
     // START 
     // by selecting step defined in url or first step of the presentation
-	if ( ua.search(/(iphone)|(ipod)|(ipad)|(android)/) != -1 ) {
-		document.body.appendChild('<center><img src="images/arrow-down.png" class="arrow" id="downArrow"/></center>');
-	}
     select(getElementFromUrl() || steps[0]);
 	anI = steps.indexOf(active);
 	if (anI != 0)
