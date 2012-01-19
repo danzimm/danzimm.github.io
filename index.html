@@ -38,6 +38,7 @@
 		</div>
 		<img src="images/arrow-right.png" class="arrow" id="rightArrow"/>
 		<img src="images/arrow-left.png" class="arrow" id="leftArrow"/>
+		<center><img src="images/arrow-down.png" class="arrow" id="downArrow"/></center>
 		<center><img src="images/arrow-up.png" class="arrow" id="upArrow"/></center>
 	</body>
 	<script type="text/javascript">
@@ -65,12 +66,20 @@
 		$('#leftArrow').mouseout(function() {
 			document.getElementById("leftArrow").style.opacity=0;
 		});
+		$('#downArrow').mouseover(function() {
+			if (isOnMenu)
+				document.getElementById("downArrow").style.opacity=1;
+		});
+		$('#downArrow').mouseout(function() {
+			document.getElementById("downArrow").style.opacity=0;
+		});
 		$(document).ready(function() {
 			setTimeout(function(){
 				document.getElementById("hint").style.opacity=0;
 				document.getElementById("rightArrow").style.opacity=0;
 				document.getElementById("leftArrow").style.opacity=0;
-				document.getElementById("upArrow").style.opacity=0;
+				document.getElementById("upArrow").style.opacity=0; 
+				document.getElementById("downArrow").style.opacity=0;
 			}, 1500);
 		});
 		$('#upArrow').mouseover(function() {

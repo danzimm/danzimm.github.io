@@ -287,6 +287,21 @@
 		return next;
 	};
 	
+	var goUp = function() {
+		var next = active;
+		if (steps.indexOf(next) != 0)
+        	next = steps[0];
+		return next;
+	}
+	
+	var goDown = function() {
+		var next = active;
+		if (steps.indexOf(next) == 0) {
+			next = steps[cells.current_page];
+		}
+		return next;
+	}
+	
     document.addEventListener("keydown", function ( event ) {
         if ( event.keyCode == 9 || ( event.keyCode >= 32 && event.keyCode <= 34 ) || (event.keyCode >= 37 && event.keyCode <= 40) ) {
 	        var next = active;
@@ -294,17 +309,14 @@
                 //case 33: ; // pg up
                 //case 37: ; // left
                 case 38:   // up
-						if (steps.indexOf(next) != 0)
-                        	next = steps[0];
+						next = goUp();
                         break;
                 // case 9:  ; // tab
                 // case 32: ; // space
                 // case 34: ; // pg down
                 // case 39: ; // right
                 case 40:   // down
-						if (steps.indexOf(next) == 0) {
-							next = steps[cells.current_page];
-						}
+						next = goUp();
                         break; 
 				case 39:
 						next = goRight();
@@ -330,10 +342,12 @@
         event.preventDefault();
 	});
 	byId("upArrow").addEventListener("click", function(event) {
-		if (byId("upArrow").style.opacity != 0) {
-			select(steps[0]);
-			event.preventDefault();
-		}
+		select(goUp());
+		event.preventDefault();
+	});
+	byId("downArrow").addEventListener("click", function(event) {
+		select(goDown());
+		event.preventDefault();
 	});
 	
 
