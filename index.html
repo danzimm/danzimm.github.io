@@ -36,10 +36,10 @@
 		<div id="hint">
 			<h2>Use arrow keys or on screen arrows and icons to navigate...</h2>
 		</div>
-		<center><img src="images/arrow-down.png" class="arrow" id="downArrow"/></center>
 		<img src="images/arrow-right.png" class="arrow" id="rightArrow"/>
 		<img src="images/arrow-left.png" class="arrow" id="leftArrow"/>
 		<center><img src="images/arrow-up.png" class="arrow" id="upArrow"/></center>
+		<center><img src="images/arrow-down.png" class="arrow" id="downArrow"/></center>
 	</body>
 	<script type="text/javascript">
 		$(function(){
@@ -78,6 +78,7 @@
 				document.getElementById("downArrow").style.opacity=0;
 		});
 		$(document).ready(function() {
+			document.getElementById("downArrow").style.top = parseInt($(document).height()/2) + "px";
 			setTimeout(function(){
 				if (!isMobile) {
 					document.getElementById("hint").style.opacity=0;
