@@ -191,9 +191,8 @@ body {
 }
 
 #downArrow {
-	position:relative;
-	top:700px;
-	margin:auto;
+	position:absolute;
+	bottom:10px;
 	z-index: 100;
 	opacity: 1;
 	-webkit-transition: all 300ms ease-in-out;

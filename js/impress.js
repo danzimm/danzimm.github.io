@@ -306,6 +306,7 @@
 	}
 	
     document.addEventListener("keydown", function ( event ) {
+		console.log("Key down " + event.keyCode);
         if ( event.keyCode == 9 || ( event.keyCode >= 32 && event.keyCode <= 34 ) || (event.keyCode >= 37 && event.keyCode <= 40) ) {
 	        var next = active;
             switch( event.keyCode ) {
@@ -319,7 +320,7 @@
                 // case 34: ; // pg down
                 // case 39: ; // right
                 case 40:   // down
-						next = goUp();
+						next = goDown();
                         break; 
 				case 39:
 						next = goRight();
