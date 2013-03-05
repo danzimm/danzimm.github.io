@@ -1,102 +1,162 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-
-	<head>
-		<title>Place of Serenity</title>
-		<link rel="icon" type="image/x-icon" href="images/favicon.ico">
-		<link rel="stylesheet" href="css/main.css">
-		<script type="text/javascript" src="js/jquery-1.7.1.min.js"></script>
-		<script type="text/javascript" src="js/jquery.promptumenu.js"></script>
-	</head>
-	<body>
-		<div id="impress" class="impress-not-supported">
-			<div id="hello" class="step" data-x="0" data-y="0">
-				<center>
-					<ul class="main-menu">
-						<li><a href="#ego"><img src="images/Contact.png" alt="" width="80" height="80" /><br/>ego</a></li>
-						<li><a href="#ignotus"><img src="images/sin[i]*sin[z*i].png" alt="" width="80" height="80" /><br/>ignotus</a></li>
-						<li><a href="#meh"><img src="images/meh.png" alt="" width="112" height="80" /><br/>meh</a></li>
-					</ul>
-				</center>
-			</div>
-			<div id="ego" class="step slide" data-x="-2000" data-y="1000" data-z="200" data-rotate-x="90">
-				<h1>hi.</h1>
-				<p id="egofirst">My name's Dan. I do what I do, and I think what I think so anything that happens is a result of my humanity.</p>
-				<p id="egosecond">I currently attend college.</p>
-				<p id="egothird">I enjoy math.</p>
-			</div>
-			<div id="ignotus" class="step slide" data-x="0" data-y="1000" data-z="200" data-rotate-x="90">
-				<h1>Hrm...</h1>
-				<p>See it > Think it > Realize it > Live it > Turtle.</p>
-			</div>
-			<div id="meh" class="step slide" data-x="2000" data-y="1000" data-z="200" data-rotate-x="90">
-				<h1>meh...</h1>
-			</div>
-		</div>
-		<div id="hint">
-			<h2>Use arrow keys or on screen arrows and icons to navigate...</h2>
-		</div>
-		<img src="images/arrow-right.png" class="arrow" id="rightArrow"/>
-		<img src="images/arrow-left.png" class="arrow" id="leftArrow"/>
-		<center><img src="images/arrow-up.png" class="arrow" id="upArrow"/></center>
-		<center><img src="images/arrow-down.png" class="arrow" id="downArrow"/></center>
-	</body>
-	<script type="text/javascript">
-		$(function(){
-			$('.main-menu').promptumenu({'width':120, 'height':160, 'rows': 1, 'columns': 1, 'direction': 'horizontal', 'pages': true,'inertia':false });
-		});
-	</script>
-	<script src="js/impress.js"></script>
-	<script type="text/javascript">
-		$('#hint').mouseover(function() {
-			document.getElementById("hint").style.opacity=1;
-		});
-		$('#hint').mouseout(function() {
-			if (!isMobile)
-				document.getElementById("hint").style.opacity=0;
-		});
-		$('#rightArrow').mouseover(function() {
-			document.getElementById("rightArrow").style.opacity=1;
-		});
-		$('#rightArrow').mouseout(function() {
-			if (!isMobile)
-				document.getElementById("rightArrow").style.opacity=0;
-		});
-		$('#leftArrow').mouseover(function() {
-			document.getElementById("leftArrow").style.opacity=1;
-		});
-		$('#leftArrow').mouseout(function() {
-			if (!isMobile)
-				document.getElementById("leftArrow").style.opacity=0;
-		});
-		$('#downArrow').mouseover(function() {
-			if (isOnMenu)
-				document.getElementById("downArrow").style.opacity=1;
-		});
-		$('#downArrow').mouseout(function() {
-			if (!isMobile)
-				document.getElementById("downArrow").style.opacity=0;
-		});
-		$(document).ready(function() {
-			document.getElementById("downArrow").style.top = parseInt($(document).height()/2) + "px";
-			setTimeout(function(){
-				if (!isMobile) {
-					document.getElementById("hint").style.opacity=0;
-					document.getElementById("rightArrow").style.opacity=0;
-					document.getElementById("leftArrow").style.opacity=0;
-					document.getElementById("upArrow").style.opacity=0; 
-					document.getElementById("downArrow").style.opacity=0;
-				}
-			}, 1500);
-		});
-		$('#upArrow').mouseover(function() {
-			if (!isOnMenu)
-				document.getElementById("upArrow").style.opacity=1;
-		});
-		$('#upArrow').mouseout(function() {
-			if (!isMobile)
-				document.getElementById("upArrow").style.opacity=0;
-		});
+<head>
+    <title>DanZimm</title>
+    <style type="text/css" media="screen">
 		
-	</script>
+		@font-face {
+			font-family: ZFont;
+			src: url('larabiefont rg.ttf');
+		}
+		
+        body {
+            padding: 0;
+            margin: 0;
+			background-color: #525252;
+			font-family: ZFont;
+        }
+	
+		#hdrcontainer {
+		}
+
+		.floatingbox {
+			-webkit-box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 1);
+			box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 1);
+			background-color: #666666;
+			-webkit-border-radius: 3px;
+		    border-radius: 3px;
+		}
+	
+        #header {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+			font-size: 1.7em;
+			margin-left: 10%;
+			margin-top: 1.2em;
+			padding: .75em;
+        }
+
+        #header li {
+            text-align: center;
+            margin: 1em;
+            /*padding-right: 1em;*/
+			display: inline-block;
+        }
+
+		#header li a {
+			color: white;
+			padding-right: 1em;
+			text-decoration: none;
+		}
+
+		#header li a.selected {
+			text-decoration: overline;
+		}
+		
+		#header li a.selected:hover {
+			text-decoration: overline;
+			cursor: default;
+		}
+		
+		#header li a:hover {
+			text-decoration: underline;
+			cursor: crosshair;
+		}
+
+		#maincontainer {
+			position: relative;
+			width: 50%;
+			top: 2em;
+			left: 40%;
+			padding-bottom: .5em;
+		}
+		
+		#maincontainer p {
+			color: white;
+			padding: 1.5em;
+			font-height: 1em;
+			line-height: 1.2em;
+			text-indent: 1.5em;
+		}
+		
+		.signiture {
+			float: right;
+		}
+
+		#footercontainer {
+			position: absolute;
+			bottom:0%;
+			color: white;
+		}
+		
+    </style>
+    <script type="text/javascript" charset="utf-8">
+    window.onload = function() {
+    	if (!window.location.hash || window.location.hash === "")
+    		window.location.hash = "#ego";
+	    var selectedelement = document.getElementById();
+	    var maincont = document.getElementById("maincontainer");
+	    var selectHash = function(hash) {
+	    	console.log("Selecting: " + hash);
+	    	var elem = document.getElementById(hash);
+	    	if (elem) {
+	    		if (selectedelement)
+	    			selectedelement.classList.remove("selected");
+    			elem.classList.add("selected");
+    			selectedelement = elem;
+    		}
+
+    		if (hash === "ego") {
+    			maincont.innerHTML = " <p>I am Dan. I like things; things like me. You can view my progress as a Homosapien on this website. Some things that should be known:<br/><br>- I take no responsibility for any injuries incurred while browsing this website.<br/><br/><span class=\"signiture\">Carpe Diem.</span></p>";
+    		} else if (hash === "apologia") {
+    			maincont.innerHTML = "<p>Well... This is supposed to be analagous to the Apology of Socrates so here I go. I by no means am wise. People may be idiotic but this translates into them being idiots and me simply being me. I hope for the best of the world and fear the worst. Here's to the prospering of all who I associate with, all of earth and all of the universe. If there exists another terrestrial like planet, I do hope we can meet. Live long and Prosper.<br/><span class=\"signiture\">DZ</span></p>";
+    		} else if (hash === "math") {
+    			maincont.innerHTML = "<p>I am currently taking my first analysis course at Loyola University Chicago. While fun it is challenging (a.k.a. don't expect me to be any expert or anything...). I still enjoy math to this day and will most likely pursue it for a larger portion of my life. I plan to start posting some of the proofs I do for classes and such here and on the physics tab.<br/><br/><span class=\"signiture\">DZ</span>";
+    		} else if (hash === "physics") {
+    			maincont.innerHTML = "<p>So I continue to love physics since my first high school physics course. The paths that are possible are as intriguing as can be. My main interest currently (although fairly volatile) is relativity and how it plays with quantum mechanics. I don't have any understanding on these subjects individually much less together, but hopefully one day I will. As with math I might post some physics assignments that I have done here on the website.<br/><br/><span class=\"signiture\">DZ</span>";
+    		}
+	    };
+	    selectHash(window.location.hash.substr(1));
+	    if ("onhashchange" in window) {
+    		var elem = document.getElementById(window.location.hash);
+	    	window.onhashchange = function () {
+	    		selectHash(window.location.hash.substr(1));
+	      	}
+	    } else {
+	    	alert("You are unable to use this website :(");
+	    }
+	}
+    </script>
+</head>
+<body>
+    <div id="hdrcontainer" class="floatingbox">
+        <ul id="header">
+           <li>
+			<a href="#ego" id="ego">
+				ego
+			</a>
+			</li>
+			<li>
+			<a href="#apologia" id="apologia">
+				apologia
+			</a>
+			</li>
+			<li>
+			<a href="#math" id="math">
+				math
+			</a>
+			</li>
+			<li>
+			<a href="#physics" id="physics">
+				physics
+			</a>
+			</li>
+        </ul>
+    </div>
+	<div id="maincontainer" class="floatingbox">
+	</div>
+	<div id="footercontainer">
+		copyright Dan Zimmerman 2013
+	</div>
+</body>
 </html>
