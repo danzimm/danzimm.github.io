@@ -102,40 +102,43 @@
 		
     </style>
     <script type="text/javascript" charset="utf-8">
-    window.onload = function() {
-    	if (!window.location.hash || window.location.hash === "")
-    		window.location.hash = "#ego";
-	    var selectedelement = document.getElementById();
-	    var maincont = document.getElementById("maincontainer");
-	    var selectHash = function(hash) {
-	    	console.log("Selecting: " + hash);
-	    	var elem = document.getElementById(hash);
-	    	if (elem) {
-	    		if (selectedelement)
-	    			selectedelement.classList.remove("selected");
-    			elem.classList.add("selected");
-    			selectedelement = elem;
-    		}
+	window.onload = function() {
+    		if (!window.location.hash || window.location.hash === "")
+    			window.location.hash = "#ego";
+		else if (window.location.hash != "#ego" && window.location.hash != "#apologia" && window.location.hash != "#math" && window.location.hash != "#physics")
+			window.location.hash = "#ego";
+	
+		var selectedelement = document.getElementById();
+		var maincont = document.getElementById("maincontainer");
+		var selectHash = function(hash) {
+			console.log("Selecting: " + hash);
+			var elem = document.getElementById(hash);
+			if (elem) {
+				if (selectedelement)
+		    			selectedelement.classList.remove("selected");
+    				elem.classList.add("selected");
+				selectedelement = elem;
+    			}
 
-    		if (hash === "ego") {
-    			maincont.innerHTML = " <p>I am Dan. I like things; things like me. You can view my progress as a Homosapien on this website. Some things that should be known:<br/><br>- I take no responsibility for any injuries incurred while browsing this website.<br/><br/><span class=\"signiture\">Carpe Diem.</span></p>";
-    		} else if (hash === "apologia") {
-    			maincont.innerHTML = "<p>Well... This is supposed to be analagous to the Apology of Socrates so here I go. I by no means am wise. People may be idiotic but this translates into them being idiots and me simply being me. I hope for the best of the world and fear the worst. Here's to the prospering of all who I associate with, all of earth and all of the universe. If there exists another terrestrial like planet, I do hope we can meet. Live long and Prosper.<br/><span class=\"signiture\">DZ</span></p>";
-    		} else if (hash === "math") {
-    			maincont.innerHTML = "<p>I am currently taking my first analysis course at Loyola University Chicago. While fun it is challenging (a.k.a. don't expect me to be any expert or anything...). I still enjoy math to this day and will most likely pursue it for a larger portion of my life. I plan to start posting some of the proofs I do for classes and such here and on the physics tab.<br/><br/><span class=\"signiture\">DZ</span>";
-    		} else if (hash === "physics") {
-    			maincont.innerHTML = "<p>So I continue to love physics since my first high school physics course. The paths that are possible are as intriguing as can be. My main interest currently (although fairly volatile) is relativity and how it plays with quantum mechanics. I don't have any understanding on these subjects individually much less together, but hopefully one day I will. As with math I might post some physics assignments that I have done here on the website.<br/><br/><span class=\"signiture\">DZ</span>";
-    		}
-	    };
-	    selectHash(window.location.hash.substr(1));
-	    if ("onhashchange" in window) {
-    		var elem = document.getElementById(window.location.hash);
-	    	window.onhashchange = function () {
-	    		selectHash(window.location.hash.substr(1));
-	      	}
-	    } else {
-	    	alert("You are unable to use this website :(");
-	    }
+			if (hash === "ego") {
+    				maincont.innerHTML = " <p>I am Dan. I like things; things like me. You can view my progress as a Homosapien on this website. Some things that should be known:<br/><br>- I take no responsibility for any injuries incurred while browsing this website.<br/><br/><span class=\"signiture\">Carpe Diem.</span></p>";
+    			} else if (hash === "apologia") {
+    				maincont.innerHTML = "<p>Well... This is supposed to be analagous to the Apology of Socrates so here I go. I by no means am wise. People may be idiotic but this translates into them being idiots and me simply being me. I hope for the best of the world and fear the worst. Here's to the prospering of all who I associate with, all of earth and all of the universe. If there exists another terrestrial like planet, I do hope we can meet. Live long and Prosper.<br/><span class=\"signiture\">DZ</span></p>";
+    			} else if (hash === "math") {
+    				maincont.innerHTML = "<p>I am currently taking my first analysis course at Loyola University Chicago. While fun it is challenging (a.k.a. don't expect me to be any expert or anything...). I still enjoy math to this day and will most likely pursue it for a larger portion of my life. I plan to start posting some of the proofs I do for classes and such here and on the physics tab.<br/><br/><span class=\"signiture\">DZ</span>";
+    			} else if (hash === "physics") {
+    				maincont.innerHTML = "<p>So I continue to love physics since my first high school physics course. The paths that are possible are as intriguing as can be. My main interest currently (although fairly volatile) is relativity and how it plays with quantum mechanics. I don't have any understanding on these subjects individually much less together, but hopefully one day I will. As with math I might post some physics assignments that I have done here on the website.<br/><br/><span class=\"signiture\">DZ</span>";
+    			}
+		};
+		selectHash(window.location.hash.substr(1));
+		if ("onhashchange" in window) {
+			var elem = document.getElementById(window.location.hash);
+			window.onhashchange = function () {
+	    			selectHash(window.location.hash.substr(1));
+			};
+		} else {
+			alert("You are unable to use this website :(");
+		}
 	}
     </script>
 </head>
