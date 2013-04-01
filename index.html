@@ -2,175 +2,167 @@
 <head>
     <title>DanZimm</title>
     <style type="text/css" media="screen">
-		
-		@font-face {
-			font-family: ZFont;
-			src: url('larabiefont rg.ttf');
-		}
-		
-	        body {
-        		padding: 0;
-        		margin: 0;
-			background-color: #49524E;
-			font-family: ZFont;
-			color: #DEDEDE;
-		}
+        
+        @font-face {
+            font-family: ZFont;
+            src: url('larabiefont rg.ttf');
+        }
+        
+        body {
+            padding: 0;
+            margin: 0;
+            background-color: #49524E;
+            font-family: ZFont;
+            color: #DEDEDE;
+        }
 
-		::selection {
-			background-color: #DEDEDE;
-			color: #49524E;
-		}
+        ::selection {
+            background-color: #DEDEDE;
+            color: #49524E;
+        }
 
-		::-moz-selection {
-			background-color: #DEDEDE;
-			color: #49524E;
-		}
-	
-		#hdrcontainer {
-			-webkit-border-radius: 0;
-			border-radius: 0;
-			/*background-color: #666666;*/
-		}
+        ::-moz-selection {
+            background-color: #DEDEDE;
+            color: #49524E;
+        }
+    
+        #hdrcontainer {
+            -webkit-border-radius: 0;
+            border-radius: 0;
+            /*background-color: #666666;*/
+        }
 
-		.floatingbox {
-			-webkit-box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 1);
-			box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 1);
-			-webkit-border-radius: .5em;
-			border-radius: .5em;
-			background-color: #63695F;
-		}
-	
-		#header {
-			list-style-type: none;
-			padding: 0;
-			margin: 0;
-			font-size: 1.7em;
-			margin-left: 10%;
-			margin-top: 1.2em;
-			padding: .75em;
-		}
+        .floatingbox {
+            -webkit-box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 1);
+            box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 1);
+            -webkit-border-radius: .5em;
+            border-radius: .5em;
+            background-color: #63695F;
+        }
+    
+        #header {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            font-size: 1.7em;
+            margin-left: 10%;
+            margin-top: 1.2em;
+            padding: .75em;
+        }
 
-		#header li {
-			text-align: center;
-			margin: 1em;
-			display: inline-block;
-		}
+        #header li {
+            text-align: center;
+            margin: 1em;
+            display: inline-block;
+        }
 
-		#header li a {
-			padding-right: 1em;
-			text-decoration: none;
-			color: #DEDEDE;
-		}
+        #header li a {
+            padding-right: 1em;
+            text-decoration: none;
+            color: #DEDEDE;
+        }
 
-		#header li a.selected {
-			text-decoration: overline;
-		}
-		
-		#header li a.selected:hover {
-			text-decoration: overline;
-			cursor: default;
-		}
-		
-		#header li a:hover {
-			text-decoration: underline;
-			cursor: crosshair;
-		}
+        #header li a.selected {
+            text-decoration: overline;
+        }
+        
+        #header li a.selected:hover {
+            text-decoration: overline;
+            cursor: default;
+        }
+        
+        #header li a:hover {
+            text-decoration: underline;
+            cursor: crosshair;
+        }
 
-		#maincontainer {
-			position: relative;
-			width: 50%;
-			top: 2em;
-			left: 40%;
-			padding-bottom: .5em;
-		}
-		
-		#maincontainer p {
-			padding: 1.5em;
-			font-height: 1em;
-			line-height: 1.2em;
-			text-indent: 1.5em;
-		}
-		
-		.signiture {
-			float: right;
-		}
+        #maincontainer {
+            position: relative;
+            width: 50%;
+            top: 2em;
+            left: 40%;
+            padding-bottom: .5em;
+        }
+        
+        #maincontainer p {
+            padding: 1.5em;
+            font-height: 1em;
+            line-height: 1.2em;
+            text-indent: 1.5em;
+        }
+        
+        .signiture {
+            float: right;
+        }
 
-		#footercontainer {
-			position: absolute;
-			bottom:0%;
-		}
-		
+        #footercontainer {
+            position: absolute;
+            bottom:0%;
+        }
+        
     </style>
     <script type="text/javascript" charset="utf-8">
-	window.onload = function() {
-    		if (!window.location.hash || window.location.hash === "")
-    			window.location.hash = "#ego";
-		else if (window.location.hash != "#ego" && window.location.hash != "#apologia" && window.location.hash != "#math" && window.location.hash != "#physics")
-			window.location.hash = "#ego";
-	
-		var selectedelement = document.getElementById();
-		var maincont = document.getElementById("maincontainer");
-		var selectHash = function(hash) {
-			console.log("Selecting: " + hash);
-			var elem = document.getElementById(hash);
-			if (elem) {
-				if (selectedelement)
-		    			selectedelement.classList.remove("selected");
-    				elem.classList.add("selected");
-				selectedelement = elem;
-    			}
+    window.onload = function() {
+            if (!window.location.hash || window.location.hash === "")
+                window.location.hash = "#ego";
+        else if (window.location.hash != "#ego" && window.location.hash != "#apologia" && window.location.hash != "#math" && window.location.hash != "#physics")
+            window.location.hash = "#ego";
+    
+        var selectedelement = document.getElementById();
+        var maincont = document.getElementById("maincontainer");
+        var selectHash = function(hash) {
+            var elem = document.getElementById(hash);
+            if (elem) {
+                if (selectedelement)
+                        selectedelement.classList.remove("selected");
+                    elem.classList.add("selected");
+                selectedelement = elem;
+                }
 
-			if (hash === "ego") {
-    				maincont.innerHTML = " <p>I am Dan. I like things; things like me. You can view my progress as a Homosapien on this website. Some things that should be known:<br/><br>- I take no responsibility for any injuries incurred while browsing this website.<br/><br/><span class=\"signiture\">Carpe Diem.</span></p>";
-    			} else if (hash === "apologia") {
-    				maincont.innerHTML = "<p>Well... This is supposed to be analagous to the Apology of Socrates so here I go. I by no means am wise. People may be idiotic but this translates into them being idiots and me simply being me. I hope for the best of the world and fear the worst. Here's to the prospering of all who I associate with, all of earth and all of the universe. If there exists another terrestrial like planet, I do hope we can meet. Live long and Prosper.<br/><span class=\"signiture\">DZ</span></p>";
-    			} else if (hash === "math") {
-    				maincont.innerHTML = "<p>I am currently taking my first analysis course at Loyola University Chicago. While fun it is challenging (a.k.a. don't expect me to be any expert or anything...). I still enjoy math to this day and will most likely pursue it for a larger portion of my life. I plan to start posting some of the proofs I do for classes and such here and on the physics tab.<br/><br/><span class=\"signiture\">DZ</span>";
-    			} else if (hash === "physics") {
-    				maincont.innerHTML = "<p>So I continue to love physics since my first high school physics course. The paths that are possible are as intriguing as can be. My main interest currently (although fairly volatile) is relativity and how it plays with quantum mechanics. I don't have any understanding on these subjects individually much less together, but hopefully one day I will. As with math I might post some physics assignments that I have done here on the website.<br/><br/><span class=\"signiture\">DZ</span>";
-    			}
-		};
-		selectHash(window.location.hash.substr(1));
-		if ("onhashchange" in window) {
-			var elem = document.getElementById(window.location.hash);
-			window.onhashchange = function () {
-	    			selectHash(window.location.hash.substr(1));
-			};
-		} else {
-			alert("You are unable to use this website :(");
-		}
-	}
+            if (hash === "ego") {
+                    maincont.innerHTML = " <p>I am Dan. I like things; things like me. You can view my progress as a Homosapien on this website. Some things that should be known:<br/><br>- I take no responsibility for any injuries incurred while browsing this website.<br/><br/><span class=\"signiture\">Carpe Diem.</span></p>";
+                } else if (hash === "apologia") {
+                    maincont.innerHTML = "<p>Well... This is supposed to be analagous to the Apology of Socrates so here I go. I by no means am wise. People may be idiotic but this translates into them being idiots and me simply being me. I hope for the best of the world and fear the worst. Here's to the prospering of all who I associate with, all of earth and all of the universe. If there exists another terrestrial like planet, I do hope we can meet. Live long and Prosper.<br/><span class=\"signiture\">DZ</span></p>";
+                } else if (hash === "academia") {
+                    maincont.innerHTML = "<p>I currently attend Loyola University Chicago while studying to (hopefully) get my bachleors degree in theoretical physics and applied math. After this (I plan on graduating around December of 2014) I hope to venture on to get my PhD in Theoretical Physics - I am not sure what specific branch I want to work with, however at the time of writing this I am fascinated with general relativity and quantum mechanics (so possibly quantum field theory? We shall see!). Anyways, I have a great fondness for mathematical sciences. While taking my first analysis course I realized how beautiful (to me at least) abstract math can be. At the same time it seems to me that all the abstractions made can be applied back into the \"real\" world (I don't mean to refer to the matrix or the allergory of the cave here, although I do love both pieces of work) making math all the more beautiful. For instance, Einstein's theory of general relativity relies on some differential geometry that isn't obvious unless the abstractions are made! Anyways, I digress, and I bid all who wander here a great week.<br/><br/><span class=\"signiture\">DZ</span></p>";
+                }
+        };
+        selectHash(window.location.hash.substr(1));
+        if ("onhashchange" in window) {
+            var elem = document.getElementById(window.location.hash);
+            window.onhashchange = function () {
+                    selectHash(window.location.hash.substr(1));
+            };
+        } else {
+            alert("You are unable to use this website :(");
+        }
+    }
     </script>
 </head>
 <body>
     <div id="hdrcontainer" class="floatingbox">
         <ul id="header">
            <li>
-			<a href="#ego" id="ego">
-				ego
-			</a>
-			</li>
-			<li>
-			<a href="#apologia" id="apologia">
-				apologia
-			</a>
-			</li>
-			<li>
-			<a href="#math" id="math">
-				math
-			</a>
-			</li>
-			<li>
-			<a href="#physics" id="physics">
-				physics
-			</a>
-			</li>
+            <a href="#ego" id="ego">
+                ego
+            </a>
+            </li>
+            <li>
+            <a href="#apologia" id="apologia">
+                apologia
+            </a>
+            </li>
+            <li>
+            <a href="#academia" id="academia">
+                academia
+            </a>
+            </li>
         </ul>
     </div>
-	<div id="maincontainer" class="floatingbox">
-	</div>
-	<div id="footercontainer">
-		copyright Dan Zimmerman 2013
-	</div>
+    <div id="maincontainer" class="floatingbox">
+    </div>
+    <div id="footercontainer">
+        copyright Dan Zimmerman 2013
+    </div>
 </body>
 </html>
