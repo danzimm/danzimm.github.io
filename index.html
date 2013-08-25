@@ -2,18 +2,31 @@
 <head>
     <title>DanZ.im</title>
     <style type="text/css" media="screen">
-        @import url(http://fonts.googleapis.com/css?family=Muli); 
+        @import url(http://fonts.googleapis.com/css?family=Quicksand:300,400); 
         body {
             padding: 0;
             margin: 0;
-            font-family: 'Muli', sans-serif;
-			background-color: #A9D490;
+            font-family: 'Quicksand', sans-serif;
+			background-color: /*#A9D490;*/ #707070;
 			color: black;
             font-size: 120%;
         }
+		#container {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height:100%;
+			background-color: #A9D490;
+			transition: all 300ms;
+			-webkit-transition: all 300ms;
+			-webkit-box-shadow:  0px 0px 10px 1px rgba(0, 0, 0, 1);
+	        box-shadow:  0px 0px 10px 1px rgba(0, 0, 0, 1);
+			
+		}
 		#headercontainer {
 			margin-right: 10%;
-			margin-top: 5%;
+			margin-top: 5em;
 			right: 0;
 			position: absolute;
 		}
@@ -21,18 +34,29 @@
 			transition: all 300ms;
 			-webkit-transition: all 300ms;
 		}
-		#mainlist {
-			position: absolute;
-			margin-left: 10%;
-			list-style: none;
-			margin-top: 5%;
-			padding-bottom: 5%;
+		#menucontainer {
+			width: 10em;
+			height: 100%;
 		}
-		#mainlist li {
-			margin-top: 5em;
-			width: 15em;
+		#menu {
+			list-style-type: none;
+			padding: 0;
+			margin: 0;
+			height: 13.1em;
+			position: relative;
+			top:50%;
+			margin-top: -6.55em;
 		}
-		#mainlist li hr {
+		#menu li {
+			margin-top: -.5em;
+			margin-bottom: -.5em;
+			padding-top: 1em;
+			padding-bottom: 1em;
+			padding-right: .5em;
+			text-align:right;
+			cursor: default;
+		}
+		#menu hr {
 			border: 0;
 		    height: 1px;
 		    background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.65), rgba(0,0,0,0)); 
@@ -40,17 +64,33 @@
 		    background-image:     -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.65), rgba(0,0,0,0)); 
 		    background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.65), rgba(0,0,0,0)); 
 		}
-		#mainlist li:nth-child(1) {
-			margin-top: inherit;
+		#menu li:hover {
+			background-color: white;
 		}
-		#mainlist li:nth-child(3) {
-			margin-top: 3.5em;
+		.plate {
+			position: absolute;
+			top: -100%;
+			margin-top: 0;
+			margin-left: 7.5%;
+			padding:0;
+			width: 50%;
+			height: 75%;
+			overflow: hidden;
+			transition: all 500ms;
+			-webkit-transition: all 500ms;
+			opacity: 0;
 		}
-		#mainlist li:nth-child(4) {
-			margin-top: 5.5em;
+		.platetitle {
+			text-align: center;
+			width: 100%;
+			display: inline-block;
+			text-decoration: none;
+			font-size: 2em;
+			padding: 0;
+			margin: 0;
 		}
-		#mainlist li:nth-child(5) {
-			margin-top: 3.5em;
+		.platecontent {
+			
 		}
     </style>
     <script type="text/javascript" charset="utf-8">
@@ -114,101 +154,128 @@
 				wavetext(element);
 			});
 		}
+		var showingMenu = false;
+		var isToggling = false;
+		function toggleMenu() {
+			if (isToggling) {
+				return;
+			} else {
+				isToggling = true;
+			}
+			var men = document.getElementById("menu");
+			var contain = document.getElementById("container");
+			if (showingMenu) {
+				showingMenu = false;
+				contain.style.marginLeft = "0";
+				contain.style.width = "100%";
+			} else {
+				showingMenu = true;
+				contain.style.marginLeft = men.offsetWidth;
+				contain.style.width = (contain.offsetWidth - men.offsetWidth).toString() + "px";
+			}
+			setTimeout(function() {
+				isToggling = false;
+			}, 300);
+		}
+		function showHashDiv(animate) {
+			var newhash = location.hash;
+			if (newhash != "") {
+					newhash = newhash.substring(1);
+				var shower = document.getElementById(newhash);
+				if (shower) {
+					shower.style.top = "12.5%";
+					shower.style.opacity = "1";
+				}
+			}
+		}
 		window.onload = function() {
 			start_wavingtext();
-			stroll.bind("#mainlist");
+			document.getElementById("container").onmousemove = function(event) {
+				if (!showingMenu) {
+					if (event.clientX <= document.getElementById("menu").offsetWidth) {
+						toggleMenu();
+					}
+				} else {
+					toggleMenu();
+				}
+			};
+			window.onhashchange = function(event) {
+				var splt = event.oldURL.split('#');
+				if (splt.length == 2) {
+					var oldhash = splt[1];
+					var hider = document.getElementById(oldhash);
+					if (hider) {
+						hider.style.opacity = "0";
+						hider.style.top = "-100%";
+						setTimeout(function(h) {
+						}, 300, hider);
+					}
+				}
+				showHashDiv();
+			};
+			if (location.hash == "") {
+				location.hash = "#tech";
+			} else {
+				showHashDiv();
+			}
+			var men = document.getElementById("menu");
+			var meni = men.getElementsByTagName("li");
+			for (i = 0; i < meni.length; i++) {
+				meni[i].onclick = function(event) {
+					window.location.hash = "#" + event.target.innerHTML.toLowerCase().replace("\n","");
+				}
+			}
 		}
     </script>
 </head>
-<body>
+<body id="body">
+<div id="menucontainer">
+<ul id="menu">
+<li>
+Tech
+</li>
+<hr/>
+<li>
+About
+</li>
+<hr/>
+<li>
+Academics
+</li>
+<hr/>
+<li>
+Miscellaneous
+</li>
+</ul>
+</div>
 <div id="container">
 <div id="headercontainer">
 <span class="wavingtext">I'm DanZ.im</span>
 </div>
-<ul class="twirl" id="mainlist">
-<li>
-<center>
-WHOIS
-</center>
-<hr>
-<p style="font-size:medium">
-<span style="float:left">
-I am a student<br/>
-I am a developer<br/>
-</span>
-<span style="float: right; text-align:right">
-I like video games<br/>
-I like movies<br/>
-</span>
+<div id="tech" class="plate">
+<span class="platetitle">Technology</span>
+<p class="platecontent">
+I currently use a combination of a MacbookPro Retina, Custom Built PC and an iPhone. I do not believe that I'm an "apple freak," however, they do often make some quality products. I must say, I am more attached to my custom built PC, it's my baby.One may ask why I have this section on my website, to which I would answer, well why not? My life is anchored in technology and everyday I am swimming in it. For a job, currently (8/25/13), I program. For said job I am writing an algorithm in python. Other languages I'm familiar with are C, C++, javascript (look at this sweet sight made from scratch!), Objective C, x86 Assembly, and I can get by with most scripting languages. I no longer participate in the iOS jailbreak scene.
 </p>
-</li>
-<li>
-<center>
-Studies
-</center>
-<hr>
-<p style="font-size:medium">
-<span style="float:left">
-Math
-</span>
-<span style="float:right">
-Physics
-</span>
+</div>
+<div id="about" class="plate">
+<span class="platetitle">About</span>
+<p class="platecontent">
+Who is "DanZ.im"? He's some dude located in Chicago who enjoys a combination of gaming, programming, physics, math and philosophy. Gaming wise, I do both PC gaming and console gaming (both PS3 and Xbox 360 - these will soon be outdated D:). Philosophy wise, I tend to be a fan of Ancient Greece, Plato and the such, however, I do enjoy a good read of more modern philosophers like Hobbes or Rousseau (yes, I'm aware they are opposites). In general, I keep busy; however, if you're in the Chicagoland region, ping me! We could grab lunch maybe!
 </p>
-</li>
-<li>
-<center>
-Languages
-</center>
-<hr>
-<p style="font-size:medium">
-<span style="float:left">
-C<br/>
-Python<br/>
-Objective C<br/>
-</span>
-<span style="float:right; text-align:right">
-x86 Assembly<br/>
-Javascript<br/>
-English<br/>
-</span>
+</div>
+<div id="academics" class="plate">
+<span class="platetitle">Academics</span>
+<p class="platecontent">
+I currently attend Loyola University Chicago. My declared majors are "Mathematics," "Physics," and "Theoretical Physics and Applied Mathematics," so, technically I'm a triple major although I really will only walk away with knowledge in math and physics. I pondered studying CS in college, but, that seems a bit silly considering I can already tutor everyone in CS classes (in other words, I already know what they would teach me). I plan to graduate in December of 2014. This might change to a semester later, considering the fact that graduate schools don't accept students during the winter. This brings me to graduate school: I plan on going for math/physics.
 </p>
-</li>
-<li>
-<center>
-Video games
-</center>
-<hr>
-<p style="font-size:medium">
-<span style="float:left">
-DotA 2
-</span>
-<span style="float:right; text-align:right">
-Assassin's Creed
-</span>
+</div>
+<div id="miscellaneous" class="plate">
+<span class="platetitle">Miscellaneous</span>
+<p class="platecontent">
+Welp, this is pretty much a "free game" page. You can contact me if you really need to at this address: <pre style="font-size:.9em">echo "wmg'%jx='qq%yqmgzq%xocq" | tr "meow%~+*'lkjqgcrtyui_p<>?=zx" "abcdefghijklmnopqrstuvwxyz@."</pre>(it's a bash script, just c/p it into terminal, if you don't know how to do this then I suppose you'll have to find me in person). Other than that, nothing much to put here... I like cats... and dogs... meow.
 </p>
-</li>
-<li>
-<center>
-Movies
-</center>
-<hr>
-<p style="font-size:medium">
-<span style="float:left">
-The Cabin in the Woods<br/>
-Good Will Hunting<br/>
-The Matrix Trilogy<br/>
-The Departed<br/>
-</span>
-<span style="float:right; text-align:right">
-I-Robot<br/>
-Memento<br/>
-The Presitige<br/>
-The Avengers<br/>
-</span>
-</p>
-</li>
-</ul>
+</div>
 </div>
 </body>
 </html>
