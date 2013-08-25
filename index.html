@@ -191,10 +191,12 @@
 		window.onload = function() {
 			start_wavingtext();
 			setTimeout(function() {
-				document.getElementById("container").style.left = "1%";
+				document.getElementById("container").style.marginLeft = "5%";
+				document.getElementById("container").style.width = (document.getElementById("container").offsetWidth - .05 * document.getElementById("container").offsetWidth) + "px";
 				setTimeout(function() {
-					document.getElementById("container").style.left = "0";
-				}, 300);
+					document.getElementById("container").style.marginLeft = "0";
+					document.getElementById("container").style.width = "100%";
+				}, 400);
 			}, 500);
 			document.getElementById("container").onmousemove = function(event) {
 				if (!showingMenu) {
