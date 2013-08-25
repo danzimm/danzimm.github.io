@@ -190,6 +190,12 @@
 		}
 		window.onload = function() {
 			start_wavingtext();
+			setTimeout(function() {
+				document.getElementById("container").style.left = "1%";
+				setTimeout(function() {
+					document.getElementById("container").style.left = "0";
+				}, 300);
+			}, 500);
 			document.getElementById("container").onmousemove = function(event) {
 				if (!showingMenu) {
 					if (event.clientX <= document.getElementById("menu").offsetWidth) {
