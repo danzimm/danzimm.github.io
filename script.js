@@ -137,4 +137,23 @@ window.onload = function() {
 			window.location.hash = "#" + event.target.innerHTML.toLowerCase().replace("\n","");
 		}
 	}
+	function selectText(element) {
+	    var doc = document;
+	    var text = doc.getElementById(element);    
+
+	    if (doc.body.createTextRange) { // ms
+	        var range = doc.body.createTextRange();
+	        range.moveToElementText(text);
+	        range.select();
+	    } else if (window.getSelection) { // moz, opera, webkit
+	        var selection = window.getSelection();            
+	        var range = doc.createRange();
+	        range.selectNodeContents(text);
+	        selection.removeAllRanges();
+	        selection.addRange(range);
+	    }
+	}
+    document.getElementById("emailaddy").onclick = function(ev) {
+        selectText("emailaddy");
+    }
 }
