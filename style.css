@@ -107,9 +107,6 @@ body {
     .plate {
         margin-left: 7.5%;
         width: 85%;
-        min-height: 100%;
-        min-height: -webkit-calc(100% - 3em);
-        min-height: calc(100% - 3em);
         height: auto;
         padding-bottom: 4em;
     }
@@ -126,7 +123,9 @@ body {
     #container {
         top: 3em;
         height: auto;
-        overflow: hidden;
+        min-height: 100%;
+        min-height: -webkit-calc(100% - 3em);
+        min-height: calc(100% - 3em);
     }
     #menucontainer {
         width: 100%;
