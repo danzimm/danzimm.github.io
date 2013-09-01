@@ -31,6 +31,7 @@ NodeList.prototype.forEach = function(func) {
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+// meow why are you looking at my source code
 function wavetext(elm) {
 	var characters = [];
 	var index = 0;
