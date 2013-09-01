@@ -94,39 +94,18 @@ function showHashDiv(animate) {
 			newhash = newhash.substring(1);
 		var shower = document.getElementById(newhash);
 		if (shower) {
-			if (document.documentElement.clientWidth > 550)
+			if (document.documentElement.clientWidth > 575)
 				shower.style.top = "12.5%";
 			else
 				shower.style.top = "0%";
+			shower.style.position = "relative";
 			shower.style.opacity = "1";
 		}
 	}
 }
-function filterme(st) {
-	if (st.indexOf("<span") != -1) {
-		if (st.indexOf("misc") != -1) {
-			return "miscellaneous";
-		} else {
-			return "academics";
-		}
-	}
-	switch (st) {
-		case "academics":
-		case "tech":
-		case "about":
-		case "miscellaneous":
-			return st;
-		case "acade":
-			return "academics";
-		case "misc":
-			return "miscellaneous";
-	}
-	return st;
-}
-
 window.onload = function() {
 	start_wavingtext();
-	if (document.documentElement.clientWidth > 550) {
+	if (document.documentElement.clientWidth > 575) {
 		setTimeout(function() {
 			document.getElementById("container").style.marginLeft = "5%";
 			document.getElementById("container").style.width = (document.getElementById("container").offsetWidth - .05 * document.getElementById("container").offsetWidth) + "px";
@@ -137,7 +116,7 @@ window.onload = function() {
 		}, 500);
 	}
 	window.onresize = function(ev) {
-		if (document.documentElement.clientWidth > 550) {
+		if (document.documentElement.clientWidth > 575) {
 			document.getElementById("container").onmousemove = function(event) {
 				if (!showingMenu) {
 					if (event.clientX <= document.getElementById("menu").offsetWidth) {
@@ -151,7 +130,7 @@ window.onload = function() {
 			document.getElementById("container").onmousemove = null;
 		}
 	};
-	if (document.documentElement.clientWidth > 550) {
+	if (document.documentElement.clientWidth > 575) {
 		document.getElementById("container").onmousemove = function(event) {
 			if (!showingMenu) {
 				if (event.clientX <= document.getElementById("menu").offsetWidth) {
@@ -170,13 +149,14 @@ window.onload = function() {
 			if (hider) {
 				hider.style.opacity = "0";
 				hider.style.top = "-100%";
+				hider.style.position = "absolute";
 				setTimeout(function(h) {
 				}, 300, hider);
 			}
 		}
 		showHashDiv();
 	};
-	if (location.hash == "") {
+	if (location.hash != "#tech" && location.hash != "#about" && location.hash != "#academics" && location.hash != "#miscellaneous") {
 		location.hash = "#tech";
 	} else {
 		showHashDiv();
@@ -185,7 +165,7 @@ window.onload = function() {
 	var meni = men.getElementsByTagName("li");
 	for (i = 0; i < meni.length; i++) {
 		meni[i].onclick = function(event) {
-			window.location.hash = "#" + filterme(event.target.innerHTML.toLowerCase().replace("\n",""));
+			window.location.hash = "#" + event.target.innerHTML.toLowerCase().replace("\n","");
 		}
 	}
 	function selectText(element) {
