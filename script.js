@@ -94,30 +94,74 @@ function showHashDiv(animate) {
 			newhash = newhash.substring(1);
 		var shower = document.getElementById(newhash);
 		if (shower) {
-			shower.style.top = "12.5%";
+			if (document.documentElement.clientWidth > 550)
+				shower.style.top = "12.5%";
+			else
+				shower.style.top = "0%";
 			shower.style.opacity = "1";
 		}
 	}
 }
+function filterme(st) {
+	if (st.indexOf("<span") != -1) {
+		if (st.indexOf("misc") != -1) {
+			return "miscellaneous";
+		} else {
+			return "academics";
+		}
+	}
+	switch (st) {
+		case "academics":
+		case "tech":
+		case "about":
+		case "miscellaneous":
+			return st;
+		case "acade":
+			return "academics";
+		case "misc":
+			return "miscellaneous";
+	}
+	return st;
+}
+
 window.onload = function() {
 	start_wavingtext();
-	setTimeout(function() {
-		document.getElementById("container").style.marginLeft = "5%";
-		document.getElementById("container").style.width = (document.getElementById("container").offsetWidth - .05 * document.getElementById("container").offsetWidth) + "px";
+	if (document.documentElement.clientWidth > 550) {
 		setTimeout(function() {
-			document.getElementById("container").style.marginLeft = "0";
-			document.getElementById("container").style.width = "100%";
-		}, 400);
-	}, 500);
-	document.getElementById("container").onmousemove = function(event) {
-		if (!showingMenu) {
-			if (event.clientX <= document.getElementById("menu").offsetWidth) {
-				toggleMenu();
-			}
+			document.getElementById("container").style.marginLeft = "5%";
+			document.getElementById("container").style.width = (document.getElementById("container").offsetWidth - .05 * document.getElementById("container").offsetWidth) + "px";
+			setTimeout(function() {
+				document.getElementById("container").style.marginLeft = "0";
+				document.getElementById("container").style.width = "100%";
+			}, 400);
+		}, 500);
+	}
+	window.onresize = function(ev) {
+		if (document.documentElement.clientWidth > 550) {
+			document.getElementById("container").onmousemove = function(event) {
+				if (!showingMenu) {
+					if (event.clientX <= document.getElementById("menu").offsetWidth) {
+						toggleMenu();
+					}
+				} else {
+					toggleMenu();
+				}
+			};
 		} else {
-			toggleMenu();
+			document.getElementById("container").onmousemove = null;
 		}
 	};
+	if (document.documentElement.clientWidth > 550) {
+		document.getElementById("container").onmousemove = function(event) {
+			if (!showingMenu) {
+				if (event.clientX <= document.getElementById("menu").offsetWidth) {
+					toggleMenu();
+				}
+			} else {
+				toggleMenu();
+			}
+		};
+	}
 	window.onhashchange = function(event) {
 		var splt = event.oldURL.split('#');
 		if (splt.length == 2) {
@@ -141,7 +185,7 @@ window.onload = function() {
 	var meni = men.getElementsByTagName("li");
 	for (i = 0; i < meni.length; i++) {
 		meni[i].onclick = function(event) {
-			window.location.hash = "#" + event.target.innerHTML.toLowerCase().replace("\n","");
+			window.location.hash = "#" + filterme(event.target.innerHTML.toLowerCase().replace("\n",""));
 		}
 	}
 	function selectText(element) {

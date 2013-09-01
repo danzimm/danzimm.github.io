@@ -1,5 +1,7 @@
 @import url(http://fonts.googleapis.com/css?family=Quicksand:300,400); 
-body {padding: 0;margin: 0;
+body {
+    padding: 0;
+    margin: 0;
     font-family: 'Quicksand', sans-serif;
     background-color: /*#A9D490;*/ #707070;
     color: black;
@@ -84,4 +86,70 @@ body {padding: 0;margin: 0;
 }
 .platecontent {
     overflow: hidden;
+}
+#mainmisc {
+    display: inline;
+}
+#mobilemisc {
+    display: none;
+}
+#mainaca {
+    display: inline;
+}
+#mobileaca {
+    display: none;
+}
+@media only all and (max-width: 550px) {
+    body {
+        font-size: 1em;
+    }
+    .plate {
+        width: 85%;
+        height: 75%;
+    }
+    #headercontainer {
+        margin-top: 0;
+        bottom: 2em;
+        width: 100%;
+        margin-right: 0%;
+        text-align: center;
+    }
+    #menu hr {
+        display: none;
+    }
+    #container {
+        top: 5%;
+        height: 95%;
+    }
+    #menucontainer {
+        width: 100%;
+        height: 3em;
+    }
+    #menu {
+        height: 3em;
+        top: 0;
+        margin-top: 0;
+    }
+    #menu li {
+        margin: 0;
+        text-align: center;
+        padding: 0;
+        width: 25%;
+        height: 3em;
+        float: left;
+        display: inline;
+        font-size: 2em;
+    }
+    #mainmisc {
+        display: none;
+    }
+    #mobilemisc {
+        display: inline;
+    }
+    #mainaca {
+        display: none;
+    }
+    #mobileaca {
+        display: inline;
+    }
 }
