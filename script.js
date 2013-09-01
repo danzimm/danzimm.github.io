@@ -28,6 +28,9 @@ NodeList.prototype.forEach = function(func) {
 		func(this[i], i, this);
 	}
 };
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 function wavetext(elm) {
 	var characters = [];
 	var index = 0;
@@ -40,15 +43,18 @@ function wavetext(elm) {
 	elm.innerHTML = htmlFromWaveCharacterArray(characters);
 	children = elm.children;			
 	var timeoutfunc = function() {
-		index++;
-		if (index == characters.length) {
-			index = 0;
-		}
-		children.objectAtIndex(index - 1).style.fontSize = "120%";
-		children.objectAtIndex(index - 2).style.fontSize = "100%";
+		children.objectAtIndex(index - 1).style.fontSize = "100%";
+		children.objectAtIndex(index).style.fontSize = "100%";
+		children.objectAtIndex(index + 1).style.fontSize = "100%";
+        oldindex = index;
+        while (index == oldindex)
+		    index = getRandomInt(0, characters.length - 1);
+        if (index > 0)
+		    children.objectAtIndex(index - 1).style.fontSize = "120%";
 		children.objectAtIndex(index).style.fontSize = "150%";
-		children.objectAtIndex(index + 1).style.fontSize = "120%";
-		setTimeout(timeoutfunc, 500);
+		if (index < children.length - 1)
+            children.objectAtIndex(index + 1).style.fontSize = "120%";
+		setTimeout(timeoutfunc, 700);
 	}
 	setTimeout(timeoutfunc, 10);
 }
