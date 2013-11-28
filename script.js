@@ -72,12 +72,12 @@ window.onload = function() {
 		menu.selectItemAtIndex(event.state.index);
 	};
 	history.replaceState({previousIndex : previousIndex, index : index},null, null);
-	if (location.hash != null && location.hash.length > 0) {
-		tst = items.indexOf(location.hash.substring(1));
-		if (tst != -1) {
-			menu.selectItemAtIndex(tst);
-			return;
-		}
-	}
+	// if (location.hash != null && location.hash.length > 0) {
+	// 	tst = items.indexOf(location.hash.substring(1));
+	// 	if (tst != -1) {
+	// 		menu.selectItemAtIndex(tst);
+	// 		return;
+	// 	}
+	// }
 	menu.selectItemAtIndex(0);
 }
