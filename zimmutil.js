@@ -1,4 +1,4 @@
-var ZimmUtil = function() {
+var ZimmUtil = (function() {
 	var module = {};
 	module.objectAtIndex = function(index) {
 		if (index < 0) {
@@ -38,7 +38,7 @@ var ZimmUtil = function() {
 		}
 	};
 	return module;
-};
+}());
 Object.defineProperty(Array.prototype, "objectAtIndex", {
 	value : ZimmUtil.objectAtIndex
 });

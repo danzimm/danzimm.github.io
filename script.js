@@ -52,10 +52,11 @@ window.onload = function() {
 	menu.clickhandler = function(index) {
 		if (previousIndex == index)
 			return;
+		history.pushState({ previousIndex : previousIndex, index : index},null,"#" + items[index]);
 		for (var i = 0; i < 4; i++) {
 			plat = plates[i];
 			plat.customStyle = function(style) {
-				rotation = (4 - i + index) * 90;
+				rotation = (4 - i + index) * 90 + (360 * (ZimmUtil.getRandomInt(0,4) - 2));
 				sty = "rotate(" + rotation + "deg)";
 				style.mozTransform = sty;
 				style.webkitTransform = sty;
@@ -66,5 +67,16 @@ window.onload = function() {
 			plat.update();
 		}
 	};
+	window.onpopstate = function(event) {
+		previousIndex = event.state.previousIndex;
+		menu.selectItemAtIndex(event.state.index);
+	};
+	if (location.hash != null && location.hash.length > 0) {
+		tst = items.indexOf(location.hash.substring(1));
+		if (tst != -1) {
+			menu.selectItemAtIndex(tst);
+			return;
+		}
+	}
 	menu.selectItemAtIndex(0);
 }

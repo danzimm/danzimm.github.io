@@ -1,7 +1,7 @@
 var DancingText = (function() {
 	var module = {};
-	module.WaveCharacter = function(letter) {
-			this.letter = let;
+	module.WaveCharacter = function(let) {
+		this.letter = let;
 		this.size = "100%";
 		this.html = function() {
 			return "<span class=\"dancingcharacter\" style=\"font-size: " + this.size + "\">" + this.letter + "</span>";
@@ -30,19 +30,20 @@ var DancingText = (function() {
 		var index = 0;
 		var newinner = "";
 		var inner = elm.innerHTML;
+		console.log("got inner: " + inner);
 		var index = -1;
 		for (i = 0; i < inner.length; i++) {
 			characters[i] = new this.WaveCharacter(inner.charAt(i));
 		}
 		elm.innerHTML = this.htmlFromWaveCharacterArray(characters);
-		children = elm.children;			
+		var children = elm.children;
 		var timeoutfunc = function() {
 			children.objectAtIndex(index - 1).style.fontSize = "100%";
 			children.objectAtIndex(index).style.fontSize = "100%";
 			children.objectAtIndex(index + 1).style.fontSize = "100%";
 	        oldindex = index;
 	        while (index == oldindex)
-			    index = this.getRandomInt(0, characters.length - 1);
+			    index = module.getRandomInt(0, characters.length - 1);
 	        if (index > 0)
 			    children.objectAtIndex(index - 1).style.fontSize = "120%";
 			children.objectAtIndex(index).style.fontSize = "150%";
@@ -55,8 +56,12 @@ var DancingText = (function() {
 	module.dance = function() {
 		this.addCSSRule(".dancingcharacter", "transition: all 500ms; -webkit-transition: all 500ms;", 1);
 		elms = document.getElementsByClassName("dancingtext");
-		for (i = 0; i < elms.length; i++) {
-			this.dancetext(elms[i]);
+		console.log("merh " + elms.length + " " + elms);
+		for (var i = 0; i < elms.length; i++) {
+			(function(){
+				var j = i;
+				module.dancetext(elms[j]);
+			}());
 		}
 	};
 	return module;
