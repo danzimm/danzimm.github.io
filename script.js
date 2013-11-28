@@ -71,7 +71,7 @@ window.onload = function() {
 		previousIndex = event.state.previousIndex;
 		menu.selectItemAtIndex(event.state.index);
 	};
-	history.replaceState({previousIndex : previousIndex, index : index},null, null);
+	history.replaceState({previousIndex : previousIndex, index : 0},null, null);
 	if (location.hash != null && location.hash.length > 0) {
 		tst = items.indexOf(location.hash.substring(1));
 		if (tst != -1) {
