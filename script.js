@@ -52,7 +52,7 @@ window.onload = function() {
 	menu.clickhandler = function(index) {
 		if (previousIndex == index)
 			return;
-		history.pushState({ previousIndex : previousIndex, index : index},null,"/" + items[index]);
+		history.pushState({ previousIndex : previousIndex, index : index},null,"#" + items[index]);
 		for (var i = 0; i < 4; i++) {
 			plat = plates[i];
 			plat.customStyle = function(style) {
@@ -72,12 +72,12 @@ window.onload = function() {
 		menu.selectItemAtIndex(event.state.index);
 	};
 	history.replaceState({previousIndex : previousIndex, index : index},null, null);
-	// if (location.hash != null && location.hash.length > 0) {
-	// 	tst = items.indexOf(location.hash.substring(1));
-	// 	if (tst != -1) {
-	// 		menu.selectItemAtIndex(tst);
-	// 		return;
-	// 	}
-	// }
+	if (location.hash != null && location.hash.length > 0) {
+		tst = items.indexOf(location.hash.substring(1));
+		if (tst != -1) {
+			menu.selectItemAtIndex(tst);
+			return;
+		}
+	}
 	menu.selectItemAtIndex(0);
 }
