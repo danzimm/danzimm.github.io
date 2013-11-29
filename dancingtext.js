@@ -30,7 +30,6 @@ var DancingText = (function() {
 		var index = 0;
 		var newinner = "";
 		var inner = elm.innerHTML;
-		console.log("got inner: " + inner);
 		var index = -1;
 		for (i = 0; i < inner.length; i++) {
 			characters[i] = new this.WaveCharacter(inner.charAt(i));
@@ -56,7 +55,6 @@ var DancingText = (function() {
 	module.dance = function() {
 		this.addCSSRule(".dancingcharacter", "transition: all 500ms; -webkit-transition: all 500ms;", 1);
 		elms = document.getElementsByClassName("dancingtext");
-		console.log("merh " + elms.length + " " + elms);
 		for (var i = 0; i < elms.length; i++) {
 			(function(){
 				var j = i;

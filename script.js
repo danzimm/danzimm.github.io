@@ -2,6 +2,7 @@
 window.onload = function() {
 	DancingText.dance();
 	Plates.initialize("0em", "0em", "100%", "100%");
+	Keys.start();
 	var items = ["Io", "Codifico", "Capisco", "Miscellaneo"];
 	var menu = new ZimmMenu.Menu(items);
 	plates = [];
@@ -49,7 +50,9 @@ window.onload = function() {
 	menu.list.id = "menu";
 	menu.addToElement(document.getElementById("menucontainer"),false);
 	var previousIndex = -1;
+	var currentIndex = -1;
 	menu.clickhandler = function(index) {
+		currentIndex = index;
 		if (previousIndex == index)
 			return;
 		history.pushState({ previousIndex : previousIndex, index : index},null,"#" + items[index]);
@@ -68,9 +71,38 @@ window.onload = function() {
 		}
 	};
 	window.onpopstate = function(event) {
-		previousIndex = event.state.previousIndex;
-		menu.selectItemAtIndex(event.state.index);
+		if ('state' in event && event.state != null && 'previousIndex' in event.state) {
+			previousIndex = event.state.previousIndex;
+			menu.selectItemAtIndex(event.state.index);
+		} else {
+			previousIndex = -1;
+			menu.selectItemAtIndex(0);
+		}
 	};
+	Keys.registerListener(new Keys.Listener([104,106,107,108,37,38,39,40], true, function(key, shift, alt, meta, ctrl) {
+		switch (key) {
+			case 104:
+			case 37:
+			case 107:
+			case 38:
+				if (currentIndex == 0) {
+					menu.selectItemAtIndex(3);
+				} else {
+					menu.selectItemAtIndex(currentIndex - 1);
+				}
+				break;
+			case 106:
+			case 108:
+			case 40:
+			case 39:
+				if (currentIndex == 3) {
+					menu.selectItemAtIndex(0);
+				} else {
+					menu.selectItemAtIndex(currentIndex + 1);
+				}
+				break;
+		}
+	}));
 	if (location.hash != null && location.hash.length > 0) {
 		tst = items.indexOf(location.hash.substring(1));
 		if (tst != -1) {
