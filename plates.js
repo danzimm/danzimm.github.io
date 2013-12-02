@@ -1,5 +1,26 @@
 var Plates = (function() {
 	var module = {};
+	var fetchStyle = function(elms) {
+		var rulestoadd = [];
+		for (var i = 0; i < document.styleSheets.length; i++) {
+			styshet = document.styleSheets[i];
+			for (var j = 0; j < styshet.cssRules.length; j++) {
+				for (var k = 0; k < elms.length; k++) {
+					if (styshet.cssRules[j].selectorText === elms[k]) {
+						rulestoadd.push(styshet.cssRules[j].style);
+					}
+				}
+			}
+		}
+		var retval = {};
+		for (i = 0; i < rulestoadd.length; i++) {
+			for (var key in rulestoadd[i]) {
+				if (rulestoadd[i][key] !== "" && rulestoadd[i][key] !== null && rulestoadd[i][key] !== undefined && typeof rulestoadd[i][key] === 'string' && typeof key === 'string' && key !== 'cssText' && isNaN(key))
+					retval[key] = rulestoadd[i][key];
+			}
+		}
+		return retval;
+	}
 	module.initialize = function(x,y,width,height) {
 		elm = document.createElement("div");
 		elm.id = "table";
@@ -30,7 +51,6 @@ var Plates = (function() {
 				elm.appendChild(this.contentDiv);
 				elm.id = "plate-" + this.name;
 				elm.classList.add("plate");
-				elm.classList.add("plate-" + this.name);
 				document.getElementById("table").appendChild(elm);
 				elm.style.position = "absolute";
 				elm.style.display = "block";

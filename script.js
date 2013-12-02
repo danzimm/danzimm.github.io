@@ -24,24 +24,12 @@ window.onload = function() {
 		plat.customStyle = function(style) {
 			style.marginTop = "calc(-" + plat.height + " / 2)";
 			rotation = (4 - index) * 90;
-			transorg = "right top";
-			style.transformOrigin = transorg;
-			style.webkitTransformOrigin = transorg;
-			style.mozTransformOrigin = transorg;
-			style.mosTransformOrigin = transorg;
-			style.oTransformOrigin = transorg;
 			sty = "rotate(" + rotation + "deg)";
 			style.mozTransform = sty;
 			style.webkitTransform = sty;
 			style.mosTransform = sty;
 			style.oTransform = sty;
 			style.transform = sty;
-			trans = "all 0.5s ease-in-out";
-			style.mozTransition = trans;
-			style.webkitTransition = trans;
-			style.mosTransition = trans;
-			style.oTransition = trans;
-			style.transition = trans;
 		};
 		plat.update();
 		plates.push(plat);

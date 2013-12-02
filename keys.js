@@ -52,8 +52,6 @@ var Keys = (function() {
 		// setTimeout(runloop, module.keyrate/1000, key, shift, alt, meta, ctrl);
 	};
 	var keydown = function(event) {
-		console.log("got event:");
-		console.log(event);
 		keymap[event.keyCode] = true;
 		runloop(event.keyCode, event.shiftKey, event.altKey, event.metaKey, event.ctrlKey);
 	};
