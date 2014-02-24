@@ -29,7 +29,7 @@ body {
     width: 10em;
     height: 100%;
 }
-#menu {
+#menucontainer ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
@@ -38,7 +38,7 @@ body {
     top:50%;
     margin-top: -8em;
 }
-#menu li {
+#menucontainer ul li {
     text-align:right;
     cursor: default;
     padding-top: 1em;
@@ -53,7 +53,7 @@ body {
     -o-transition: all 0.2s ease-in;
     transition: all 0.2s ease-in;
 }
-#menu hr {
+#menucontainer ul hr {
     border: 0;
     height: 1px;
     background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.65), rgba(0,0,0,0)); 
@@ -61,7 +61,7 @@ body {
     background-image:     -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.65), rgba(0,0,0,0)); 
     background-image:      -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.65), rgba(0,0,0,0)); 
 }
-#menu li:hover {
+#menucontainer ul li:hover {
     background-color: #72C2B8;
 }
 

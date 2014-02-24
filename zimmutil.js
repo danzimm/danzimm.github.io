@@ -1,6 +1,6 @@
 var ZimmUtil = (function() {
-	var module = {};
-	module.objectAtIndex = function(index) {
+	var that = {};
+	that.objectAtIndex = function(index) {
 		if (index < 0) {
 			index = this.length + index;
 		} else if (index >= this.length) {
@@ -8,37 +8,41 @@ var ZimmUtil = (function() {
 		}
 		return this[index];
 	};
-	module.getRandomInt = function(min, max) {
+	that.getRandomInt = function(min, max) {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	};
-	module.tr = function(input, str1, str2) {
-		output = "";
+	that.tr = function(input, str1, str2) {
+		var output = "", i, inde;
 		for (i = 0; i < input.length; i++) {
 			inde = str1.indexOf(input[i]);
 			output += str2[inde];
 		}
 		return output;
-	}
-	module.addCSSRule = function(selector, rules, index) {
-		sheet = document.styleSheets[0];
-		if(sheet.insertRule) {
+	};
+	that.addCSSRule = function(selector, rules, index) {
+		var sheet = document.styleSheets[0];
+        if (index === undefined || index === -1) {
+            index = sheet.cssRules.length;
+        }
+		if (sheet.insertRule) {
 			sheet.insertRule(selector + "{" + rules + "}", index);
 		} else {
 			sheet.addRule(selector, rules, index);
 		}
 	};
-	module.fullSite = function() {};
-	module.mobileSite = function() {};
-	module.fullSiteSize = 575;
-	module.updateWindowSize = function(size) {
+	that.fullSite = function() {};
+	that.mobileSite = function() {};
+	that.fullSiteSize = 575;
+	that.updateWindowSize = function(size) {
 		if (size > this.fullSiteSize) {
 			this.fullSite();
 		} else {
 			this.mobileSite();
 		}
 	};
-	return module;
+	return that;
 }());
+
 Object.defineProperty(Array.prototype, "objectAtIndex", {
 	value : ZimmUtil.objectAtIndex
 });
@@ -48,8 +52,11 @@ Object.defineProperty(NodeList.prototype, "objectAtIndex", {
 Object.defineProperty(HTMLCollection.prototype, "objectAtIndex", {
 	value : ZimmUtil.objectAtIndex
 });
-NodeList.prototype.forEach = function(func) {
-	for (i = 0; i < this.length; i++) {
-		func(this[i], i, this);
-	}
-};
+Object.defineProperty(NodeList.prototype, "forEach", {
+    value : function(func) {
+        var i;
+        for (i = 0; i < this.length; i++) {
+            func(this[i], i, this);
+        }
+    }
+});

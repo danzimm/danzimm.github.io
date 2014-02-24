@@ -1,55 +1,90 @@
 var ZimmMenu = (function() {
-	var module = {};
-	module.selectedClass = "zimmlected";
-	module.Menu = function(items, splitters) {
-		var menu = this;
-		this.clickhandler = function(index) {};
-		this.created = (typeof items === typeof []);
-		this.list = (this.created ? document.createElement("ul") : items);
+	var that = {},
+        module = that; // need this for namespace reasons -_-
+	that.selectedClass = "zimmlected";
+	that.createMenu = function(items, splitters) {
+		var that = {},
+            listNode = document.createElement("ul"),
+            li, _clickHandler;
+        that.currentIndex = -1;
+        that.clickHandler = function(index) {};
+
+        _clickHandler = function(index, restricthist) {
+            if (that.currentIndex == index) {
+                return;
+            }
+            that.currentIndex = index;
+            if (!restricthist) {
+                var state = { index : index };
+                history.pushState(state, "DanZ.im - " + items[index], "#" + items[index]);
+            }
+            that.clickHandler(index);
+        };
+
+        window.onpopstate = function(event) {
+            if (event.state && event.state.hasOwnProperty('index')) {
+                that.selectItemAtIndex(event.state.index, true); // PLEASE MAKE SURE WE RESTRICT THE HISTORY FOR CHRISTS SAKE I ALMOST KILLED SOMEONE FIGURING THIS OUT
+            }
+        };
+
 		for (i = 0; i < items.length; i++) {
-			var li;
-			if (this.created) {
-				li = document.createElement("li");
-				li.innerHTML = items[i];
-			} else {
-				li = items.children[i];
-			}
+
+            li = document.createElement("li");
+            li.innerHTML = items[i];
+
 			li.onclick = function(event) {
-				ind = menu.indexForItem(this.innerHTML);
-				menu.selectItemAtIndex(ind);
+				ind = that.indexForItem(this.innerHTML);
+				that.selectItemAtIndex(ind);
 			};
-			if (this.created) {
-				this.list.appendChild(li);
-				if (splitters) {
-					if (i < items.length - 1) {
-						this.list.appendChild(document.createElement("hr"));
-					}
-				}
-			}
-		}
-		this.selectItem = function(item) {
+            
+            listNode.appendChild(li);
+
+            if (splitters) {
+                if (i < items.length - 1) { // not the last element
+                    that.list.appendChild(document.createElement("hr"));
+                }
+            }
+
+		};
+
+		that.selectItem = function(item) {
 			this.selectItemAtIndex(this.indexForItem(item));
 		};
-		this.selectItemAtIndex = function(index) {
-			for (i = 0; i < this.list.children.length; i++) {
+		that.selectItemAtIndex = function(index, restricthist) {
+			for (i = 0; i < listNode.children.length; i++) {
 				if (i == index) {
-					this.list.children[i].classList.add(module.selectedClass);
+					listNode.children[i].classList.add(module.selectedClass);
 				} else {
-					this.list.children[i].classList.remove(module.selectedClass);
+					listNode.children[i].classList.remove(module.selectedClass);
 				}
 			};
-			menu.clickhandler(index);
+			_clickHandler(index, restricthist);
 		};
-		this.indexForItem = function(item) {
-			for (i = 0; i < this.list.children.length; i++) {
-				if (this.list.children[i].innerHTML == item) {
+		that.indexForItem = function(item) {
+			for (i = 0; i < listNode.children.length; i++) {
+				if (listNode.children[i].innerHTML === item) {
 					return i;
 				}
-			};
+			}
 		};
-		this.addToElement = function(elm) {
-			elm.appendChild(this.list);
+        that.previous = function() {
+            if (this.currentIndex == 0) {
+                this.selectItemAtIndex(items.length - 1);
+            } else {
+                this.selectItemAtIndex(this.currentIndex - 1);
+            }
+        };
+        that.next = function() {
+            if (this.currentIndex == items.length - 1) {
+                this.selectItemAtIndex(0);
+            } else {
+                this.selectItemAtIndex(this.currentIndex + 1);
+            }
+        };
+		that.addToElement = function(elm) {
+			elm.appendChild(listNode);
 		};
+        return that;
 	};
-	return module;
+	return that;
 }());

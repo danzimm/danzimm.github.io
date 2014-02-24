@@ -1,7 +1,7 @@
 var Plates = (function() {
-	var module = {};
+	var that = {};
 	var fetchStyle = function(elms) {
-		var rulestoadd = [];
+		var rulestoadd = [], retval = {};
 		for (var i = 0; i < document.styleSheets.length; i++) {
 			styshet = document.styleSheets[i];
 			for (var j = 0; j < styshet.cssRules.length; j++) {
@@ -12,16 +12,15 @@ var Plates = (function() {
 				}
 			}
 		}
-		var retval = {};
 		for (i = 0; i < rulestoadd.length; i++) {
 			for (var key in rulestoadd[i]) {
-				if (rulestoadd[i][key] !== "" && rulestoadd[i][key] !== null && rulestoadd[i][key] !== undefined && typeof rulestoadd[i][key] === 'string' && typeof key === 'string' && key !== 'cssText' && isNaN(key))
+				if (typeof key === 'string' && key !== 'cssText' && isNaN(key) && typeof rulestoadd[i][key] === 'string' && rulestoadd[i][key].length > 0)
 					retval[key] = rulestoadd[i][key];
 			}
 		}
 		return retval;
 	}
-	module.initialize = function(x,y,width,height) {
+	that.initialize = function(x,y,width,height) {
 		elm = document.createElement("div");
 		elm.id = "table";
 		if (document.body.children.length > 0) {
@@ -38,13 +37,13 @@ var Plates = (function() {
 		elm.style.position = "absolute";
 		elm.style.overflow = "hidden";
 	};
-	module.Plate = function(name) {
-		var plate = this;
-		this.name = name;
-		this.customStyle = function(style){};
-		this.overridecss = true;
-		this.contentDiv = document.createElement("div");
-		this.update = function() {
+	that.placePlate = function(name) {
+		var that = {};
+		that.name = name;
+		that.customStyle = function(style){};
+		that.overridecss = true;
+		that.contentDiv = document.createElement("div");
+		that.update = function() {
 			var elm = document.getElementById("plate-" + this.name);
 			if (elm == null) {
 				elm = document.createElement("div");
@@ -67,13 +66,14 @@ var Plates = (function() {
 			}
 			this.customStyle(elm.style);
 		};
-		this.x = "0";
-		this.y = "0";
-		this.width = "100%";
-		this.height = "100%";
-		this.backgroundColor = "white";
-		this.textColor = "black";
-		this.layerLevel = 0;
-	}
-	return module;
-}())
+		that.x = "0";
+		that.y = "0";
+		that.width = "100%";
+		that.height = "100%";
+		that.backgroundColor = "white";
+		that.textColor = "black";
+		that.layerLevel = 0;
+        return that;
+	};
+	return that;
+}());
