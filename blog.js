@@ -7,14 +7,12 @@ var ZimmBlog = (function() {
             return base + '/' + append;
     };
     that.createBlog = function(metaurl, posturl, name) {
-        console.log("aslkjdfkjlasdf");
         var that = {},
             currentPost = -1,
             currentPostData = "",
             posts = [],
             nposts = 0,
             loadNumberOfPosts = function() {
-                console.log("loading");
                 var xhr = new XMLHttpRequest(),
                     resp;
                 xhr.open("GET", metaurl, false);
