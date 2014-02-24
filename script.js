@@ -116,7 +116,8 @@ window.onload = function() {
     Keys.registerCheatCode([38, 38, 40, 40, 37, 39, 37, 39, 66, 65], "cheat1", cheatBack);
     Keys.registerCheatCode([38, 38, 40, 40, 37, 39, 37, 39, 98, 97], "cheat1", cheatBack);
 
-    var blog = ZimmBlog.createBlog("http://localhost:3002/meta", "http://localhost:3002/post/", "blog"),
+    //var blog = ZimmBlog.createBlog("http://localhost:3002/meta", "http://localhost:3002/post/", "blog"),
+    var blog = ZimmBlog.createBlog("http://blog.danz.im/meta", "http://blog.danz.im/post/", "blog"),
         belm = blog.draw();
     belm.classList.add("textbloc");
     document.getElementById(items[2].toLowerCase()).appendChild(belm);
