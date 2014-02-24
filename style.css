@@ -88,3 +88,17 @@ body {
     margin: 1em;
 }
 
+#io span.textbloc {
+    height: 55px;
+}
+
+.blogpost {
+    height: 26.5em;
+    margin-top: -0.5em;
+    overflow: auto;
+}
+
+.blognav {
+    cursor: pointer;
+}
+

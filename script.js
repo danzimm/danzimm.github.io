@@ -3,7 +3,7 @@ window.onload = function() {
 	DancingText.dance();
 	Plates.initialize("0em", "0em", "100%", "100%");
 	Keys.start();
-	var items = ["Io", "Codifico", "Capisco", "Miscellaneo"],
+	var items = ["Io", "Interessi", "Blog", "Miscellaneo"],
 	    menu = ZimmMenu.createMenu(items),
         plates = [], item, plat, elm, elmm, index = 0;
     menu.addToElement(document.getElementById("menucontainer"));
@@ -115,7 +115,14 @@ window.onload = function() {
     };
     Keys.registerCheatCode([38, 38, 40, 40, 37, 39, 37, 39, 66, 65], "cheat1", cheatBack);
     Keys.registerCheatCode([38, 38, 40, 40, 37, 39, 37, 39, 98, 97], "cheat1", cheatBack);
-	if (location.hash && location.hash.length > 0) {
+
+    var blog = ZimmBlog.createBlog("http://localhost:3002/meta", "http://localhost:3002/post/", "blog"),
+        belm = blog.draw();
+    belm.classList.add("textbloc");
+    document.getElementById(items[2].toLowerCase()).appendChild(belm);
+    blog.showPost(0);
+	
+    if (location.hash && location.hash.length > 0) {
 		var tst = items.indexOf(location.hash.substring(1));
 		if (tst != -1) {
 			menu.selectItemAtIndex(tst, true); // restrict for the first page
