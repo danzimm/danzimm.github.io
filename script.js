@@ -105,16 +105,22 @@ window.onload = function() {
             secondary : "#3A92C8"
         }
     ];
-    var currentColorScheme = 0;
+    var currentColorScheme = Cookies.get("colorscheme");
+    if (currentColorScheme == "")
+        currentColorScheme = 0;
+    else
+        currentColorScheme = parseInt(currentColorScheme);
+    applyColorScheme(colorSchemes[currentColorScheme]);
     var cheatBack = function() {
         currentColorScheme++;
         if (currentColorScheme == colorSchemes.length) {
             currentColorScheme = 0;
         }
+        Cookies.set("colorscheme", currentColorScheme, 365);
         applyColorScheme(colorSchemes[currentColorScheme]);
     };
     Keys.registerCheatCode([38, 38, 40, 40, 37, 39, 37, 39, 66, 65], "cheat1", cheatBack);
-    Keys.registerCheatCode([38, 38, 40, 40, 37, 39, 37, 39, 98, 97], "cheat1", cheatBack);
+    Keys.registerCheatCode([38, 38, 40, 40, 37, 39, 37, 39, 98, 97], "cheat2", cheatBack);
 
     //var blog = ZimmBlog.createBlog("http://localhost:3002/meta", "http://localhost:3002/post/", "blog"),
     var blog = ZimmBlog.createBlog("http://blog.danz.im/meta", "http://blog.danz.im/post/", "blog"),

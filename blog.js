@@ -22,7 +22,6 @@ var ZimmBlog = (function() {
                 nposts = resp.files.length;
             };
         loadNumberOfPosts();
-        console.log("nposts: " + nposts);
         that.draw = function() {
             var elm = document.createElement("div"),
                 content = document.createElement("div"),
