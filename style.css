@@ -8,6 +8,9 @@ body {
     color: white;
     font-size: 1em;
 }
+::selection {
+    background-color: #72C2B8;
+}
 
 .plate {
     -webkit-transition: all 0.5s ease-in-out;

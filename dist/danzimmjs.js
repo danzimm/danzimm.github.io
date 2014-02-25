@@ -503,6 +503,7 @@ window.onload = function() {
         ZimmUtil.addCSSRule("#menucontainer ul li:hover", "background-color: " + colorScheme.secondary);
         ZimmUtil.addCSSRule(".zimmlected", "background-color: " + colorScheme.darkPrimary);
         ZimmUtil.addCSSRule(".platecontent", "background-color: " + colorScheme.darkPrimary);
+        ZimmUtil.addCSSRule("::selection", "background-color: " + colorScheme.secondary);
     };
     var colorSchemes = [
         {
@@ -542,8 +543,7 @@ window.onload = function() {
     };
     Keys.registerCheatCode([38, 38, 40, 40, 37, 39, 37, 39, 66, 65], "cheat1", cheatBack);
     Keys.registerCheatCode([38, 38, 40, 40, 37, 39, 37, 39, 98, 97], "cheat2", cheatBack);
-
-    //var blog = ZimmBlog.createBlog("http://localhost:3002/meta", "http://localhost:3002/post/", "blog"),
+    
     var blog = ZimmBlog.createBlog("http://blog.danz.im/meta", "http://blog.danz.im/post/", "blog"),
         belm = blog.draw();
     belm.classList.add("textbloc");
