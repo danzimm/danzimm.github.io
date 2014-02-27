@@ -57,7 +57,6 @@ window.onload = function() {
 			plat = plates[i];
 			plat.customStyle = (function(j) {
                 return function(style) {
-                    console.log("styling: " + index + ", " + j);
                     var rotation = (4 - j + index) * 90 + (360 * (ZimmUtil.getRandomInt(0,4) - 2)),
                         sty = "rotate(" + rotation + "deg)";
                     style.mozTransform = sty;
@@ -155,11 +154,15 @@ window.onload = function() {
                     Matrix.options.backgroundColor = colorSchemes[currentColorScheme].primary;
                     Matrix.options.color = "#FFF";
                     Matrix.options.fontSize = 10;
-                    Matrix.options.speed = 5;
-                    Matrix.options.fadeIntensity = 5;
-                    Matrix.options.chance = 0.995;
+                    Matrix.options.speed = 3;
+                    Matrix.options.fadeIntensity = 10;
+                    Matrix.options.chance = 0.99;
+                    var rtable = [];
+                    for (j = 0; j < 10000; j++) {
+                        rtable.push(Math.random());
+                    }
                     Matrix.options.speedForColumn = function(c, t) {
-                        return 10 * Math.pow(Math.sin(4 * Math.PI * c / Math.floor(t) ), 2);
+                        return (10 * Math.pow(Math.sin(4 * Math.PI * c / Math.floor(t) ), 2) + 2 * rtable[c]);
                     };
                     matrix = Matrix.fly(cont);
                 }, 500);
@@ -180,7 +183,6 @@ window.onload = function() {
     // cheats
     // {{{
     var cheatBack = function(nam) {
-        console.log(nam);
         currentColorScheme++;
         if (currentColorScheme == colorSchemes.length) {
             currentColorScheme = 0;
