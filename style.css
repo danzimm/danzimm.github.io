@@ -26,6 +26,14 @@ body {
     -webkit-transform-origin: right top;
 }
 
+.matrixContainer {
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+}
+
 #menucontainer {
     margin: 0;
     padding: 0;
@@ -40,6 +48,12 @@ body {
     position: relative;
     top:50%;
     margin-top: -8em;
+
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -ms-transition: all 0.5s ease-in-out;
+    -o-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
 }
 #menucontainer ul li {
     text-align:right;

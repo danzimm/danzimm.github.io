@@ -59,7 +59,7 @@ var Keys = (function() {
                 cheatindex = 0;
             }
             if (cheatindex == cheatsequence.length) {
-                callback();
+                callback(name);
                 cheatindex = 0;
             }
         }, name);

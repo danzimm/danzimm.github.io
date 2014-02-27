@@ -1,5 +1,7 @@
 
 window.onload = function() {
+    // initialization
+    // {{{
 	DancingText.dance();
 	Plates.initialize("0em", "0em", "100%", "100%");
 	Keys.start();
@@ -11,7 +13,11 @@ window.onload = function() {
 
 	document.body.style.width = "100%";
 	document.body.style.height = "100%";
-
+    
+    // }}}
+    
+    // customization
+    // {{{
 	for (i in items) {
 		item = items[i];
 
@@ -27,39 +33,44 @@ window.onload = function() {
 		elm.appendChild(elmm);
 		elmm.style.display = "block";
 
-		plat.customStyle = function(style) {
-            var rotation = (4 - index) * 90,
-                sty = "rotate(" + rotation + "deg)";
-			style.marginTop = "calc(-" + plat.height + " / 2)";
-			style.mozTransform = sty;
-			style.webkitTransform = sty;
-			style.mosTransform = sty;
-			style.oTransform = sty;
-			style.transform = sty;
-		};
+		plat.customStyle = (function(j) {
+            return function(style) {
+                var rotation = (4 - j) * 90,
+                    sty = "rotate(" + rotation + "deg)";
+                style.marginTop = "calc(-" + plat.height + " / 2)";
+                style.mozTransform = sty;
+                style.webkitTransform = sty;
+                style.mosTransform = sty;
+                style.oTransform = sty;
+                style.transform = sty;
+            };
+        })(index);
 
 		plat.update();
 		plates.push(plat);
 		index++;
 	}
-
+    
 	menu.clickHandler = function(index) {
         var plat, i;
 		for (i = 0; i < 4; i++) {
 			plat = plates[i];
-			plat.customStyle = function(style) {
-				var rotation = (4 - i + index) * 90 + (360 * (ZimmUtil.getRandomInt(0,4) - 2)),
-                    sty = "rotate(" + rotation + "deg)";
-				style.mozTransform = sty;
-				style.webkitTransform = sty;
-				style.mosTransform = sty;
-				style.oTransform = sty;
-				style.transform = sty;
-			};
+			plat.customStyle = (function(j) {
+                return function(style) {
+                    console.log("styling: " + index + ", " + j);
+                    var rotation = (4 - j + index) * 90 + (360 * (ZimmUtil.getRandomInt(0,4) - 2)),
+                        sty = "rotate(" + rotation + "deg)";
+                    style.mozTransform = sty;
+                    style.webkitTransform = sty;
+                    style.mosTransform = sty;
+                    style.oTransform = sty;
+                    style.transform = sty;
+                };
+            })(i);
 			plat.update();
 		}
 	};
-    
+
 	Keys.registerListener([104,106,107,108,37,38,39,40], true, function(key, shift, alt, meta, ctrl) {
 		switch (key) {
 			case 104:
@@ -76,7 +87,10 @@ window.onload = function() {
 				break;
 		};
 	}, "movement");
-
+    // }}}
+    
+    // color schemes
+    // {{{
     var applyColorScheme = function(colorScheme) {
         document.body.style.backgroundColor = colorScheme.primary;
         ZimmUtil.addCSSRule("#menucontainer ul li:hover", "background-color: " + colorScheme.secondary);
@@ -112,7 +126,61 @@ window.onload = function() {
     else
         currentColorScheme = parseInt(currentColorScheme);
     applyColorScheme(colorSchemes[currentColorScheme]);
-    var cheatBack = function() {
+    // }}}
+    
+    //matrix
+    // {{{
+    var matrixMode = false,
+        matrixContainer,
+        matrix,
+        toggleMatrix = function() {
+            var i, plat;
+            matrixMode = !matrixMode;
+            if (matrixMode) {
+                for (i = 0; i < plates.length; i++) {
+                    plat = plates[i];
+                    plat.x = "calc(100% + 20em)";
+                    plat.update();
+                }
+                document.getElementById("menucontainer").children[0].style.left = "-100%";
+                var cont = document.createElement("div");
+                cont.classList.add("matrixContainer");
+                cont.style.position = "absolute";
+                cont.style.top = cont.style.left = "0";
+                cont.style.width = cont.style.height = "100%";
+                cont.style.backgroundColor = colorSchemes[currentColorScheme].primary;
+                matrixContainer = cont;
+                setTimeout(function() {
+                    document.body.appendChild(matrixContainer);
+                    Matrix.options.backgroundColor = colorSchemes[currentColorScheme].primary;
+                    Matrix.options.color = "#FFF";
+                    Matrix.options.fontSize = 10;
+                    Matrix.options.speed = 5;
+                    Matrix.options.fadeIntensity = 5;
+                    Matrix.options.chance = 0.995;
+                    Matrix.options.speedForColumn = function(c, t) {
+                        return 10 * Math.pow(Math.sin(4 * Math.PI * c / Math.floor(t) ), 2);
+                    };
+                    matrix = Matrix.fly(cont);
+                }, 500);
+            } else {
+                for (i = 0; i < plates.length; i++) {
+                    plat = plates[i];
+                    plat.x = "10em";
+                    plat.update();
+                }
+                document.getElementById("menucontainer").children[0].style.left = "0";
+                Matrix.land(matrix);
+                document.body.removeChild(matrixContainer);
+                matrixContainer = null;
+            }
+        };
+    // }}}
+
+    // cheats
+    // {{{
+    var cheatBack = function(nam) {
+        console.log(nam);
         currentColorScheme++;
         if (currentColorScheme == colorSchemes.length) {
             currentColorScheme = 0;
@@ -122,13 +190,22 @@ window.onload = function() {
     };
     Keys.registerCheatCode([38, 38, 40, 40, 37, 39, 37, 39, 66, 65], "cheat1", cheatBack);
     Keys.registerCheatCode([38, 38, 40, 40, 37, 39, 37, 39, 98, 97], "cheat2", cheatBack);
-    
+    Keys.registerCheatCode([77, 65, 84, 82, 73, 88], "cheat3", function() {
+        toggleMatrix();
+    });
+    // }}}
+
+    // blog
+    // {{{
     var blog = ZimmBlog.createBlog("http://blog.danz.im/meta", "http://blog.danz.im/post/", "blog"),
         belm = blog.draw();
     belm.classList.add("textbloc");
     document.getElementById(items[2].toLowerCase()).appendChild(belm);
     blog.showPost(0);
-	
+	// }}}
+    
+    // initial hash
+    // {{{
     if (location.hash && location.hash.length > 0) {
 		var tst = items.indexOf(location.hash.substring(1));
 		if (tst != -1) {
@@ -137,4 +214,5 @@ window.onload = function() {
 		}
 	}
     menu.selectItemAtIndex(0); // don't restrict this one though
+    // }}}
 };

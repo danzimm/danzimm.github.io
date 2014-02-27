@@ -64,6 +64,8 @@ var Plates = (function() {
 				elm.style.color = this.textColor;
 				elm.style.backgroundColor = this.backgroundColor;
 			}
+            console.log("Hrmde: ");
+            console.log(this.customStyle);
 			this.customStyle(elm.style);
 		};
 		that.x = "0";
