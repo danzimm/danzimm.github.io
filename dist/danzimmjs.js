@@ -262,7 +262,10 @@ var Matrix = (function() {
             speed : 3,
             chance : 0.975,
             speedForColumn : function(c) { return 1; },
-            tailLength : 10
+            tailLength : 10,
+            letterRestriction : function(x, y) {
+                return null;
+            }
         };
     that.letters = {};
     that.letters.chinese = "田由甲申甴电甶男甸甹町画甼甽甾甿畀畁畂畃畄畅畆畇畈畉畊畋界畍畎畏畐畑";
@@ -313,13 +316,18 @@ var Matrix = (function() {
             letterset = letters.split(""),
             drops = [], counters, i, j, ncol, nrow,
             fgrgb = hexToRgb(that.options.color), fgFillStyle = "rgba(" + fgrgb.r + "," + fgrgb.g + "," + fgrgb.b + ",",
-            fontWidth = fetchCharWidth(that.options.fontSize), columnSpeeds;
+            fontWidth = fetchCharWidth(that.options.fontSize), columnSpeeds, retval = {
+                canvas : c,
+                elm : elm
+            };
         
         elm.appendChild(c);
         c.width = elm.clientWidth;
         c.height = elm.clientHeight;
         ncol = Math.floor(c.width / fontWidth) + 1;
         nrow = Math.floor(c.height / that.options.fontSize) + 1;
+        retval.ncol = ncol;
+        retval.nrow = nrow;
         counters = new Array(ncol);
         columnSpeeds = new Array(columnSpeeds);
         for (i = 0; i < ncol; i++) {
@@ -332,32 +340,41 @@ var Matrix = (function() {
             }
             counters[i] = 0;
             drops[i].ready = true;
+            columnSpeeds[i] = that.options.speedForColumn(i, ncol);
         }
-        var draw = function(fontSize, fontWidth, fontFamily, col, chance, tailLength) {
+        retval.drops = drops;
+        retval.stop = false;
+        var draw = function(fontSize, fontWidth, fontFamily, chance, tailLength, letterRestriction) {
             ctx.clearRect(0,0, c.width, c.height);
             ctx.font = fontSize + "px " + fontFamily;
             for (i = 0; i < ncol; i++) {
                 counters[i]++;
-                var flag = false;
+                var flag = false,
+                    doer = counters[i] > columnSpeeds[i];
+                if (doer) {
+                    counters[i] = 0;
+                }
                 for (j = 0; j < nrow; j++) {
                     var drop = drops[i][j];
-                    if (drop.alpha === 1) {
-                        flag = true;
-                        drop.alpha -= 1 / (tailLength + 1);
-                    } else if (flag) {
-                        flag = false;
-                        drop.alpha = 1;
-                        drop.letter = letterset[Math.floor(Math.random()*letterset.length)];
-                        if (j === nrow - 1) {
-                            drops[i].ready = true;
+                    if (doer) {
+                        if (drop.alpha === 1) {
+                            flag = true;
+                            drop.alpha -= 1 / (tailLength + 1);
+                        } else if (flag) {
+                            flag = false;
+                            drop.alpha = 1;
+                            drop.letter = letterRestriction(i, j) || letterset[Math.floor(Math.random()*letterset.length)];
+                            if (j === nrow - 1) {
+                                drops[i].ready = true;
+                            }
+                        } else {
+                            drop.alpha -= 1 / (tailLength + 1);
                         }
-                    } else {
-                        drop.alpha -= 1 / (tailLength + 1);
                     }
                     ctx.fillStyle = fgFillStyle + drop.alpha + ")";
                     ctx.fillText(drop.letter, i*fontWidth, j*fontSize);
                 }
-                if (drops[i].ready && Math.random() > chance) {
+                if (!retval.stop && drops[i].ready && drops[i][nrow-1].alpha <= 0 && Math.random() > chance) {
                     drops[i].ready = false;
                     drops[i][0].alpha = 1;
                     drops[i][0].letter = letterset[Math.floor(Math.random()*letterset.length)];
@@ -365,16 +382,30 @@ var Matrix = (function() {
             }
         };
 
-        var id = setInterval(draw, 100 / that.options.speed, that.options.fontSize, fontWidth, that.options.fontFamily, that.options.color, that.options.chance, that.options.tailLength);
-        return {
-            id : id,
-            elm : elm,
-            canvas : c
-        };
+        retval.id = setInterval(draw, 100 / that.options.speed, that.options.fontSize, fontWidth, that.options.fontFamily, that.options.chance, that.options.tailLength, that.options.letterRestriction);
+        return retval;
     };
-    that.land = function(arg) {
-        clearInterval(arg.id);
-        arg.elm.removeChild(arg.canvas);
+    that.land = function(arg, cb) {
+        var i = 0, id;
+        var done = function() {
+            clearInterval(id);
+            clearInterval(arg.id);
+            arg.elm.removeChild(arg.canvas);
+            cb();
+        };
+        arg.stop = true;
+        var checker = function() {
+            if (i === arg.ncol) {
+                done();
+            } else {
+                if (arg.drops[i].ready && arg.drops[i][arg.nrow-1].alpha <= 0) {
+                    while (arg.drops[i] && arg.drops[i].ready && arg.drops[i][arg.nrow-1].alpha <= 0) {
+                        i++;
+                    }
+                }
+            }
+        };
+        id = setInterval(checker, 33);
     };
 
     return that;
@@ -687,12 +718,14 @@ window.onload = function() {
             var i, plat;
             matrixMode = !matrixMode;
             if (matrixMode) {
+                /*
                 for (i = 0; i < plates.length; i++) {
                     plat = plates[i];
                     plat.x = "calc(100% + 20em)";
                     plat.update();
                 }
                 document.getElementById("menucontainer").children[0].style.left = "-100%";
+                */
                 var cont = document.createElement("div");
                 cont.classList.add("matrixContainer");
                 cont.style.position = "absolute";
@@ -700,32 +733,40 @@ window.onload = function() {
                 cont.style.width = cont.style.height = "100%";
                 //cont.style.backgroundColor = colorSchemes[currentColorScheme].primary;
                 matrixContainer = cont;
-                setTimeout(function() {
-                    document.body.appendChild(matrixContainer);
-                    Matrix.options.color = "#FFF";
-                    Matrix.options.fontSize = 14;
-                    Matrix.options.speed = 3;
-                    Matrix.options.chance = 0.99;
-                    Matrix.options.tailLength = 40;
-                    var rtable = [];
-                    for (j = 0; j < 10000; j++) {
-                        rtable.push(Math.random());
+                document.body.insertBefore(matrixContainer, document.body.firstChild);
+                Matrix.options.color = "#FFF";
+                Matrix.options.fontSize = 15;
+                Matrix.options.speed = 3;
+                Matrix.options.chance = 0.975;
+                Matrix.options.tailLength = 40;
+                var str = "I am DanZ.im";
+                Matrix.options.letterRestriction = function(x, y) {
+                    if (y === 10 && x >= 1 && x <= 1 + str.length) {
+                        return str[x - 1];
                     }
-                    Matrix.options.speedForColumn = function(c, t) {
-                        return (10 * Math.pow(Math.sin(4 * Math.PI * c / Math.floor(t) ), 2) + 2 * rtable[c]);
-                    };
-                    matrix = Matrix.fly(cont);
-                }, 500);
+                    return null;
+                };
+                var rtable = [];
+                for (j = 0; j < 10000; j++) {
+                    rtable.push(Math.random());
+                }
+                Matrix.options.speedForColumn = function(c, t) {
+                    return (3 * Math.pow(Math.sin(4 * Math.PI * c / Math.floor(t) ), 2) + 2 * rtable[c]);
+                };
+                matrix = Matrix.fly(cont);
             } else {
+                /*
                 for (i = 0; i < plates.length; i++) {
                     plat = plates[i];
                     plat.x = "10em";
                     plat.update();
                 }
                 document.getElementById("menucontainer").children[0].style.left = "0";
-                Matrix.land(matrix);
-                document.body.removeChild(matrixContainer);
-                matrixContainer = null;
+                */
+                Matrix.land(matrix, function() {
+                    document.body.removeChild(matrixContainer);
+                    matrixContainer = null;
+                });
             }
         };
     // }}}

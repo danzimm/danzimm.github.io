@@ -136,12 +136,14 @@ window.onload = function() {
             var i, plat;
             matrixMode = !matrixMode;
             if (matrixMode) {
+                /*
                 for (i = 0; i < plates.length; i++) {
                     plat = plates[i];
                     plat.x = "calc(100% + 20em)";
                     plat.update();
                 }
                 document.getElementById("menucontainer").children[0].style.left = "-100%";
+                */
                 var cont = document.createElement("div");
                 cont.classList.add("matrixContainer");
                 cont.style.position = "absolute";
@@ -149,32 +151,40 @@ window.onload = function() {
                 cont.style.width = cont.style.height = "100%";
                 //cont.style.backgroundColor = colorSchemes[currentColorScheme].primary;
                 matrixContainer = cont;
-                setTimeout(function() {
-                    document.body.appendChild(matrixContainer);
-                    Matrix.options.color = "#FFF";
-                    Matrix.options.fontSize = 14;
-                    Matrix.options.speed = 3;
-                    Matrix.options.chance = 0.99;
-                    Matrix.options.tailLength = 40;
-                    var rtable = [];
-                    for (j = 0; j < 10000; j++) {
-                        rtable.push(Math.random());
+                document.body.insertBefore(matrixContainer, document.body.firstChild);
+                Matrix.options.color = "#FFF";
+                Matrix.options.fontSize = 15;
+                Matrix.options.speed = 3;
+                Matrix.options.chance = 0.975;
+                Matrix.options.tailLength = 40;
+                var str = "I am DanZ.im";
+                Matrix.options.letterRestriction = function(x, y) {
+                    if (y === 10 && x >= 1 && x <= 1 + str.length) {
+                        return str[x - 1];
                     }
-                    Matrix.options.speedForColumn = function(c, t) {
-                        return (10 * Math.pow(Math.sin(4 * Math.PI * c / Math.floor(t) ), 2) + 2 * rtable[c]);
-                    };
-                    matrix = Matrix.fly(cont);
-                }, 500);
+                    return null;
+                };
+                var rtable = [];
+                for (j = 0; j < 10000; j++) {
+                    rtable.push(Math.random());
+                }
+                Matrix.options.speedForColumn = function(c, t) {
+                    return (3 * Math.pow(Math.sin(4 * Math.PI * c / Math.floor(t) ), 2) + 2 * rtable[c]);
+                };
+                matrix = Matrix.fly(cont);
             } else {
+                /*
                 for (i = 0; i < plates.length; i++) {
                     plat = plates[i];
                     plat.x = "10em";
                     plat.update();
                 }
                 document.getElementById("menucontainer").children[0].style.left = "0";
-                Matrix.land(matrix);
-                document.body.removeChild(matrixContainer);
-                matrixContainer = null;
+                */
+                Matrix.land(matrix, function() {
+                    document.body.removeChild(matrixContainer);
+                    matrixContainer = null;
+                });
             }
         };
     // }}}
