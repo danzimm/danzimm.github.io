@@ -147,16 +147,15 @@ window.onload = function() {
                 cont.style.position = "absolute";
                 cont.style.top = cont.style.left = "0";
                 cont.style.width = cont.style.height = "100%";
-                cont.style.backgroundColor = colorSchemes[currentColorScheme].primary;
+                //cont.style.backgroundColor = colorSchemes[currentColorScheme].primary;
                 matrixContainer = cont;
                 setTimeout(function() {
                     document.body.appendChild(matrixContainer);
-                    Matrix.options.backgroundColor = colorSchemes[currentColorScheme].primary;
                     Matrix.options.color = "#FFF";
-                    Matrix.options.fontSize = 10;
+                    Matrix.options.fontSize = 14;
                     Matrix.options.speed = 3;
-                    Matrix.options.fadeIntensity = 10;
                     Matrix.options.chance = 0.99;
+                    Matrix.options.tailLength = 40;
                     var rtable = [];
                     for (j = 0; j < 10000; j++) {
                         rtable.push(Math.random());
