@@ -1,6 +1,7 @@
 var Keys = (function() {
 	var that = {},
 	    listeners = [],
+        allAscii = [],
 	    lower = function(str) {
             var ret = [], elm;
             for (i = 0; i < str.length; i++) {
@@ -26,7 +27,7 @@ var Keys = (function() {
             that.name = name;
             return that;
         };
-
+    allAscii = "qwertyuiopasdfghjklzxcvbnm[]\\;',./`1234567890-=~!@#$%^&*()_+QWERTYUIOP{}|ASDFGHJKL:\"ZXCVBNM<>?".split("").map(function(a) { return a.charCodeAt(0) });
 	that.registerListener = function(letters, caseinsensitive, callback, name) {
 		listeners.push(createListener(letters, caseinsensitive, callback, name));
 	};
@@ -52,7 +53,7 @@ var Keys = (function() {
 	};
     that.registerCheatCode = function(cheatsequence, name, callback) {
         var cheatindex = 0;
-        this.registerListener(cheatsequence, false, function(key, shift, alt, meta, ctrl) {
+        this.registerListener(cheatsequence.concat(allAscii), false, function(key, shift, alt, meta, ctrl) {
             if (key === cheatsequence[cheatindex]) {
                 cheatindex++;
             } else {

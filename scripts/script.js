@@ -1,5 +1,6 @@
 
 window.onload = function() {
+    var production = true;
     // initialization
     // {{{
 	DancingText.dance();
@@ -96,6 +97,7 @@ window.onload = function() {
         ZimmUtil.addCSSRule(".zimmlected", "background-color: " + colorScheme.darkPrimary);
         ZimmUtil.addCSSRule(".platecontent", "background-color: " + colorScheme.darkPrimary);
         ZimmUtil.addCSSRule("::selection", "background-color: " + colorScheme.secondary);
+        ZimmUtil.addCSSRule("a:hover", "background-color: " + colorScheme.secondary);
     };
     var colorSchemes = [
         {
@@ -117,6 +119,16 @@ window.onload = function() {
             primary : "#C8703A",
             darkPrimary : "#A35B2F",
             secondary : "#3A92C8"
+        },
+        {
+            primary : "#ADD683",
+            darkPrimary : "#93B570",
+            secondary : "#AC83D6"
+        },
+        {
+            primary : "#AC83D6",
+            darkPrimary : "#9270B5",
+            secondary : "#ADD683"
         }
     ];
     var currentColorScheme = Cookies.get("colorscheme");
@@ -200,15 +212,21 @@ window.onload = function() {
         applyColorScheme(colorSchemes[currentColorScheme]);
     };
     Keys.registerCheatCode([38, 38, 40, 40, 37, 39, 37, 39, 66, 65], "cheat1", cheatBack);
-    Keys.registerCheatCode([38, 38, 40, 40, 37, 39, 37, 39, 98, 97], "cheat2", cheatBack);
-    Keys.registerCheatCode([77, 65, 84, 82, 73, 88], "cheat3", function() {
+    Keys.registerCheatCode([77, 65, 84, 82, 73, 88], "cheat2", function() {
         toggleMatrix();
+    });
+    Keys.registerCheatCode([82, 82], "cheat3", function() {
+        var i = menu.currentIndex;
+        while (i === menu.currentIndex)
+            i = ZimmUtil.getRandomInt(0, items.length-1);
+        menu.selectItemAtIndex(i);
     });
     // }}}
 
     // blog
     // {{{
-    var blog = ZimmBlog.createBlog("http://blog.danz.im/meta", "http://blog.danz.im/post/", "blog"),
+    var host = production ? "http://blog.danz.im" : "http://localhost:3002";
+    var blog = ZimmBlog.createBlog(host + "/meta", host + "/post/", "blog"),
         belm = blog.draw();
     belm.classList.add("textbloc");
     document.getElementById(items[2].toLowerCase()).appendChild(belm);

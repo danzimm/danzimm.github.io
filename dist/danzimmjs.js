@@ -67,6 +67,7 @@ var ZimmBlog = (function() {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     currentPostData = xhr.responseText;
                     document.getElementById(name+"_blog_content").innerHTML = currentPostData;
+                    MathJax.Hub.Queue(["Typeset", MathJax.Hub, name+"_blog_content"]);
                 }
             };
             xhr.open("GET", concaturl(posturl, index), true);
@@ -176,6 +177,7 @@ var ZimmBlog = (function() {
 ;var Keys = (function() {
 	var that = {},
 	    listeners = [],
+        allAscii = [],
 	    lower = function(str) {
             var ret = [], elm;
             for (i = 0; i < str.length; i++) {
@@ -201,7 +203,7 @@ var ZimmBlog = (function() {
             that.name = name;
             return that;
         };
-
+    allAscii = "qwertyuiopasdfghjklzxcvbnm[]\\;',./`1234567890-=~!@#$%^&*()_+QWERTYUIOP{}|ASDFGHJKL:\"ZXCVBNM<>?".split("").map(function(a) { return a.charCodeAt(0) });
 	that.registerListener = function(letters, caseinsensitive, callback, name) {
 		listeners.push(createListener(letters, caseinsensitive, callback, name));
 	};
@@ -227,7 +229,7 @@ var ZimmBlog = (function() {
 	};
     that.registerCheatCode = function(cheatsequence, name, callback) {
         var cheatindex = 0;
-        this.registerListener(cheatsequence, false, function(key, shift, alt, meta, ctrl) {
+        this.registerListener(cheatsequence.concat(allAscii), false, function(key, shift, alt, meta, ctrl) {
             if (key === cheatsequence[cheatindex]) {
                 cheatindex++;
             } else {
@@ -582,6 +584,7 @@ var Matrix = (function() {
 }());
 ;
 window.onload = function() {
+    var production = true;
     // initialization
     // {{{
 	DancingText.dance();
@@ -678,6 +681,7 @@ window.onload = function() {
         ZimmUtil.addCSSRule(".zimmlected", "background-color: " + colorScheme.darkPrimary);
         ZimmUtil.addCSSRule(".platecontent", "background-color: " + colorScheme.darkPrimary);
         ZimmUtil.addCSSRule("::selection", "background-color: " + colorScheme.secondary);
+        ZimmUtil.addCSSRule("a:hover", "background-color: " + colorScheme.secondary);
     };
     var colorSchemes = [
         {
@@ -699,6 +703,16 @@ window.onload = function() {
             primary : "#C8703A",
             darkPrimary : "#A35B2F",
             secondary : "#3A92C8"
+        },
+        {
+            primary : "#ADD683",
+            darkPrimary : "#93B570",
+            secondary : "#AC83D6"
+        },
+        {
+            primary : "#AC83D6",
+            darkPrimary : "#9270B5",
+            secondary : "#ADD683"
         }
     ];
     var currentColorScheme = Cookies.get("colorscheme");
@@ -782,15 +796,21 @@ window.onload = function() {
         applyColorScheme(colorSchemes[currentColorScheme]);
     };
     Keys.registerCheatCode([38, 38, 40, 40, 37, 39, 37, 39, 66, 65], "cheat1", cheatBack);
-    Keys.registerCheatCode([38, 38, 40, 40, 37, 39, 37, 39, 98, 97], "cheat2", cheatBack);
-    Keys.registerCheatCode([77, 65, 84, 82, 73, 88], "cheat3", function() {
+    Keys.registerCheatCode([77, 65, 84, 82, 73, 88], "cheat2", function() {
         toggleMatrix();
+    });
+    Keys.registerCheatCode([82, 82], "cheat3", function() {
+        var i = menu.currentIndex;
+        while (i === menu.currentIndex)
+            i = ZimmUtil.getRandomInt(0, items.length-1);
+        menu.selectItemAtIndex(i);
     });
     // }}}
 
     // blog
     // {{{
-    var blog = ZimmBlog.createBlog("http://blog.danz.im/meta", "http://blog.danz.im/post/", "blog"),
+    var host = production ? "http://blog.danz.im" : "http://localhost:3002";
+    var blog = ZimmBlog.createBlog(host + "/meta", host + "/post/", "blog"),
         belm = blog.draw();
     belm.classList.add("textbloc");
     document.getElementById(items[2].toLowerCase()).appendChild(belm);

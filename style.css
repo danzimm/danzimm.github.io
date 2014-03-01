@@ -8,6 +8,7 @@ body {
     color: white;
     font-size: 1em;
 }
+
 ::selection {
     background-color: #72C2B8;
 }
@@ -119,3 +120,53 @@ body {
     cursor: pointer;
 }
 
+::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+}
+
+::-webkit-scrollbar-corner {
+    display: none;
+}
+
+::-webkit-scrollbar-track {
+    display: none;
+}
+
+::-webkit-scrollbar-thumb {
+    height: 10px;
+    background-color: rgba(255,255,255,0.5);
+    opacity: 0.3;
+    -webkit-border-radius: 6px;
+}
+
+.highlight ::-webkit-scrollbar-thumb {
+    height: 10px;
+    background-color: rgba(137,137,137,0.5);
+    -webkit-border-radius: 6px;
+}
+
+.highlight {
+    max-width: 85%;
+    color: #000;
+}
+
+.highlight ::selection {
+    background: rgba(65,131,196,0.4);
+}
+
+.highlight pre {
+    background-color: #f8f8f8;
+    box-shadow: inset 0px 0px 5px #000;
+    font-size: 13px;
+    line-height: 19px;
+    overflow: auto;
+    padding: 6px 10px;
+    border-radius: 3px;
+}
+
+a {
+    text-decoration: none;
+    color: #FFF;
+    font-weight: bold;
+}

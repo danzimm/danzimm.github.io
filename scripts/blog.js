@@ -67,6 +67,7 @@ var ZimmBlog = (function() {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     currentPostData = xhr.responseText;
                     document.getElementById(name+"_blog_content").innerHTML = currentPostData;
+                    MathJax.Hub.Queue(["Typeset", MathJax.Hub, name+"_blog_content"]);
                 }
             };
             xhr.open("GET", concaturl(posturl, index), true);
