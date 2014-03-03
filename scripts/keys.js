@@ -27,7 +27,7 @@ var Keys = (function() {
             that.name = name;
             return that;
         };
-    allAscii = "qwertyuiopasdfghjklzxcvbnm[]\\;',./`1234567890-=~!@#$%^&*()_+QWERTYUIOP{}|ASDFGHJKL:\"ZXCVBNM<>?".split("").map(function(a) { return a.charCodeAt(0) });
+    allAscii = " qwertyuiopasdfghjklzxcvbnm[]\\;',./`1234567890-=~!@#$%^&*()_+QWERTYUIOP{}|ASDFGHJKL:\"ZXCVBNM<>?".split("").map(function(a) { return a.charCodeAt(0) });
 	that.registerListener = function(letters, caseinsensitive, callback, name) {
 		listeners.push(createListener(letters, caseinsensitive, callback, name));
 	};
