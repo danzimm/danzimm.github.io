@@ -1,5 +1,7 @@
 *.psd
+*.log
 .DS_Store
 TacoHTMLEditTemp.html
 doit.sh
 node_modules
+dist
