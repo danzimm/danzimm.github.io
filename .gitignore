@@ -5,3 +5,4 @@ TacoHTMLEditTemp.html
 doit.sh
 node_modules
 dist
+*.swp

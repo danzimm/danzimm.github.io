@@ -11,7 +11,7 @@ module.exports = function(grunt) {
       },
       dist: {
         src: ['scripts/*.js'],
-        dest: 'dist/<%= pkg.name %>.js'
+        dest: 'dist/script.js'
       }
     },
     uglify: {
@@ -20,7 +20,7 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'dist/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
+          'dist/script.min.js': ['<%= concat.dist.dest %>']
         }
       }
     },
@@ -28,10 +28,32 @@ module.exports = function(grunt) {
       compile: {
         options: {
           paths: ['styles/'],
+          use: [
+            require('autoprefixer-stylus')
+          ]
         },
         files: {
           'dist/style.css': ['styles/*.styl']
         }
+      }
+    },
+    watch: {
+      scripts: {
+        files: [
+          'scripts/*.js'
+        ],
+        tasks: [
+          'concat',
+          'uglify'
+        ]
+      },
+      styles: {
+        files: [
+          'styles/*.styl'
+        ],
+        tasks: [
+          'stylus'
+        ]
       }
     }
   });
@@ -39,6 +61,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-stylus');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   grunt.registerTask('default', ['concat', 'uglify', 'stylus']);
 

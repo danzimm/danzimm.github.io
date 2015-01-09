@@ -2,9 +2,11 @@
   "name": "DanZ.im",
   "version": "3.0.0",
   "devDependencies": {
+    "autoprefixer-stylus": "^0.4.0",
     "grunt": "~0.4.5",
     "grunt-contrib-concat": "*",
+    "grunt-contrib-stylus": "*",
     "grunt-contrib-uglify": "*",
-    "grunt-contrib-stylus": "*"
+    "grunt-contrib-watch": "^0.6.1"
   }
 }
