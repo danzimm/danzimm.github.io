@@ -28,13 +28,67 @@ main
   height 100%
 
 #content
-  margin-top -100%
+  position absolute
+  top 0
+  left 0
+  width 100%
+  height 100%
   > h1
     position relative
+    float left
     top 8.5vw
     left 8.5vw
     opacity 0
+    font-size 2vw
   .opaque
     transition opacity 0.5s ease-in
     opacity 1
+
+div.navcontainer
+  width 100%
+  height 100%
+  position relative
+  div.navigation
+    position absolute
+    top 50%
+    left 50%
+    margin 0
+    margin-right -50%
+    transform translate(-50%, -50%)
+    ul
+      padding 0
+      list-style-type none
+      li.showing
+        transition opacity 0.5s ease-in-out, margin 0.5s ease-in-out
+        margin 0.5vw
+        opacity 1
+      li
+        display inline-block
+        color darken(bg-color, 30)
+        width 12vw
+        height 4vw
+        border-radius 5px
+        background-color accent-color
+        position relative
+        margin 1vw
+        opacity 0
+        cursor pointer
+        ::selection
+          background-color bg-color
+          color accent-color
+        span
+          position absolute
+          top 50%
+          left 50%
+          margin 0
+          margin-right -50%
+          transform translate(-50%, -50%)
+          font-size 1.5vw
+          cursor pointer
+       li:hover
+          background-color darken(bg-color, 30)
+          color txt-color
+          ::selection
+            background-color accent-color
+            color darken(bg-color, 30)
 

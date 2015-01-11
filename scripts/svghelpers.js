@@ -15,7 +15,8 @@ var SVGHelpers = (function() {
     path.getBoundingClientRect();
     path.style.transition = path.style.WebkitTransition = 'stroke-dashoffset ' + duration + ' ' + curve;
     path.style.strokeDashoffset = '0';
-    return ANIHelper.enQ(duration);
+    console.log(path);
+    return Z.enQ(duration);
   };
 
   return that;

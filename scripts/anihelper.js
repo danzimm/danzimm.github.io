@@ -1,5 +1,5 @@
 
-var ANIHelper = (function() {
+var Z = (function() {
   var that = {};
   function convertPlainTextDurationToMS(plain) {
     var matches;
@@ -13,9 +13,7 @@ var ANIHelper = (function() {
     }
     return -1;
   }
-  that.createCallback = function(after, cb, thisArg, args) {
-    thisArg = thisArg || null;
-    args = args || null;
+  that.createCallback = function(after, cb) {
     var delay = 0;
     if (typeof after === 'string') {
       delay = convertPlainTextDurationToMS(after);
@@ -25,7 +23,37 @@ var ANIHelper = (function() {
     } else {
       delay = after;
     }
-    setTimeout(cb, delay, thisArg, args);
+    setTimeout(cb, delay);
+  };
+  that.iterative = function(n, func) {
+    var cbs = [];
+    var i = 0;
+    for (i = 0; i < n; i++) {
+      var j = i;
+      (function(j) {
+        cbs.push(function(acb) {
+          func.apply(this, [j, acb]); 
+        });
+      })(i);
+    }
+    return Z.concurrent.apply(this, cbs);
+  };
+  that.concurrent = function() {
+    var args = arguments;
+    var len = args.length;
+    return function(cb) {
+      var i;
+      var j = 0;
+      function localCB() {
+        j++;
+        if (j == len) {
+          cb();
+        }
+      } // TODO: concat args passed in here
+      for (i = 0; i < len; i++) {
+        args[i](localCB);
+      }
+    };
   };
   that.enQ = function(cborstr) {
     var queue = {};
@@ -34,18 +62,19 @@ var ANIHelper = (function() {
       if (cbs.length == 0) {
         return;
       }
-      arguments[arguments.length] = proceed;
-      var cb = cbs[0];
-      cbs.slice(1);
-      cb.apply(queue, arguments);
+      var args = Array.prototype.slice.call(arguments);
+      var acb = cbs[0];
+      args.push(proceed);
+      cbs = cbs.slice(1);
+      acb.apply(queue, args);
     };
-    queue.push = queue.then = function(cb) {
-      cbs.push(cb);
+    queue.push = queue.then = function(acb) {
+      cbs.push(acb);
     };
     var cb;
     if (typeof cborstr == 'string') {
       cb = function(acb) {
-        ANIHelper.createCallback(cborstr, acb);
+        Z.createCallback(cborstr, acb);
       };
     } else {
       cb = cborstr;
