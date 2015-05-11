@@ -20,7 +20,7 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'dist/script.min.js': ['<%= concat.dist.dest %>']
+          'dist/script.min.js': ['dist/script.es5.js']
         }
       }
     },
@@ -44,6 +44,7 @@ module.exports = function(grunt) {
         ],
         tasks: [
           'concat',
+          'babel',
           'uglify'
         ]
       },
@@ -55,6 +56,13 @@ module.exports = function(grunt) {
           'stylus'
         ]
       }
+    },
+    babel: {
+      dist: {
+        files: {
+          'dist/script.es5.js': '<%= concat.dist.dest %>'
+        }
+      }
     }
   });
 
@@ -62,7 +70,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-stylus');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-babel');
 
-  grunt.registerTask('default', ['concat', 'uglify', 'stylus']);
+  grunt.registerTask('default', ['concat', 'babel', 'uglify', 'stylus']);
 
 };

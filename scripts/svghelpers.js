@@ -15,9 +15,9 @@ var SVGHelpers = (function() {
     path.getBoundingClientRect();
     path.style.transition = path.style.WebkitTransition = 'stroke-dashoffset ' + duration + ' ' + curve;
     path.style.strokeDashoffset = '0';
-    console.log(path);
     return Z.enQ(duration);
   };
 
   return that;
 })();
+

@@ -2,6 +2,10 @@
 accent-color = #8ef3af
 bg-color = #a8a8a8
 txt-color = #dde7e7
+square-dimen = 80vmin
+oneoversqrt2 = 0.707106781
+oneminusoneoversqrt2 = 0.292893219
+anilength = 0.8s
 
 @import url(http://fonts.googleapis.com/css?family=Raleway:200);
 
@@ -15,80 +19,107 @@ body
   color darken(bg-color, 30)
 
 main
-  width 50vw
-  height 50vw
+  width square-dimen
+  height square-dimen
   position absolute
   left 50vw
   top 50vh
-  margin-top -25vw
-  margin-left -25vw
+  margin-top -(@height / 2)
+  margin-left -(@width / 2)
 
-.container
-  width 100%
-  height 100%
+.displaynone
+  display: none !important
 
-#content
-  position absolute
-  top 0
-  left 0
-  width 100%
-  height 100%
-  > h1
-    position relative
-    float left
-    top 8.5vw
-    left 8.5vw
-    opacity 0
-    font-size 2vw
-  .opaque
-    transition opacity 0.5s ease-in
-    opacity 1
-
-div.navcontainer
-  width 100%
-  height 100%
+.button
+  display inline-block
+  color darken(bg-color, 30)
+  width 21vmin
+  height 7vmin
+  border-radius 0.5vmin
+  background-color accent-color
+  cursor pointer
+  opacity 0
   position relative
-  div.navigation
+  transition opacity anilength ease-in-out, margin anilength ease-in-out
+  &.showing
+    opacity 1
+  ::selection
+    background-color bg-color
+    color accent-color
+  span
     position absolute
     top 50%
     left 50%
     margin 0
     margin-right -50%
     transform translate(-50%, -50%)
+    font-size 3vmin
+    cursor pointer
+  &:hover
+    background-color darken(bg-color, 30)
+    color txt-color
+    ::selection
+      background-color accent-color
+      color darken(bg-color, 30)
+
+section
+  position absolute
+  top 0
+  left 0
+  width 100%
+  height 100%
+  > header > h1
+    position absolute
+    top 14vmin
+    left 14vmin
+    opacity 0
+    font-size 5vmin
+    margin-top - oneoversqrt2 vmin
+    margin-left oneoversqrt2 vmin
+    transition opacity anilength ease-in, margin anilength ease-in
+    &.opaque
+      margin-top 0
+      margin-left 0
+      opacity 1
+  nav
+    display block
+    position absolute
+    top 50%
+    left 50%
+    margin 0
+    margin-right -50%
+    transform translate(-50%, -50%)
+    transition transform anilength ease-in-out
     ul
       padding 0
       list-style-type none
-      li.showing
-        transition opacity 0.5s ease-in-out, margin 0.5s ease-in-out
-        margin 0.5vw
-        opacity 1
       li
         display inline-block
-        color darken(bg-color, 30)
-        width 12vw
-        height 4vw
-        border-radius 5px
-        background-color accent-color
-        position relative
-        margin 1vw
-        opacity 0
-        cursor pointer
-        ::selection
-          background-color bg-color
-          color accent-color
-        span
-          position absolute
-          top 50%
-          left 50%
-          margin 0
-          margin-right -50%
-          transform translate(-50%, -50%)
-          font-size 1.5vw
-          cursor pointer
-       li:hover
-          background-color darken(bg-color, 30)
-          color txt-color
-          ::selection
-            background-color accent-color
-            color darken(bg-color, 30)
+        margin 2vmin
+        &.showing
+          margin 1vmin
+  article
+    // r = (W - 2M) / 2
+    // a^2 = 2(w/2)^2
+    // a = r
+    // (W - 2M)^2 / 2^2 = 2(w/2)^2
+    // (W-2M)^2 = 8 w^2 / 4
+    // (W-2M)^2 = 2 w^2
+    // W - 2M = sqrt(2) w
+    // (W - 2M) / sqrt(2) = w
+    // 2r + w = W
+    // W - w = 2r
+    // r = (W-w) / 2
+    // r = (W - (W - 2M)/sqrt(2)) / 2
+    // r = W(1 - 1/sqrt(2)) / 2 + M / sqrt(2)
+    width oneoversqrt2 * (square-dimen - 6)
+    height @width
+    margin auto
+    margin-top square-dimen * oneminusoneoversqrt2 * 0.5 + oneoversqrt2 * 3vmin
+    opacity 1
+    transition opacity (anilength / 8) ease-in-out
+    font-size 2.5vmin
+    text-align justify
+    &.hidden
+      opacity 0
 
