@@ -30,7 +30,8 @@ module.exports = function(grunt) {
           paths: ['styles/'],
           use: [
             require('autoprefixer-stylus')
-          ]
+          ],
+          compress: false
         },
         files: {
           'dist/style.css': ['styles/*.styl']

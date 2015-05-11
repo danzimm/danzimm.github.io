@@ -82,8 +82,7 @@ var Z = (function() {
         return;
       }
       var args = Array.prototype.slice.call(arguments);
-      var acb = cbs[0];
-      cbs = cbs.slice(1);
+      var acb = cbs.shift();
       running = true;
       if (acb.length === 0) {
         setTimeout(function() { acb.apply(queue); proceed(); }, 0);
