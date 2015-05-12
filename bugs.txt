@@ -1,0 +1,4 @@
+
+- when starting in mobile size and expanding ring is not there (js issue)
+- doesn't work on ios simulator???
+
