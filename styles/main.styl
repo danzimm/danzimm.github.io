@@ -7,14 +7,6 @@ oneoversqrt2 = 0.707106781
 oneminusoneoversqrt2 = 0.292893219
 anilength = 0.8s
 
-@font-face {
-  font-family: 'Raleway';
-  font-style: normal;
-  font-weight: 200;
-  src: local('Raleway ExtraLight'), local('Raleway-ExtraLight'), url(http://fonts.gstatic.com/s/raleway/v9/8KhZd3VQBtXTAznvKjw-kwzyDMXhdD8sAj6OAJTFsBI.woff2) format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
-}
-
 body
   font-family 'Raleway', sans-serif
   color txt-color
@@ -34,7 +26,7 @@ main
   margin-left -(@width / 2)
 
 .displaynone
-  display: none !important
+  visibility hidden !important
 
 .button
   display inline-block
@@ -123,9 +115,11 @@ section
     margin auto
     margin-top square-dimen * oneminusoneoversqrt2 * 0.5 + oneoversqrt2 * 3vmin
     opacity 1
-    transition opacity (anilength / 8) ease-in-out
+    transition opacity (anilength / 3) ease-in-out, transform (anilength / 3) ease-in-out
     font-size 2.5vmin
     text-align justify
+    transform none
     &.hidden
       opacity 0
+      transform scale(0.8, 0.8)
 

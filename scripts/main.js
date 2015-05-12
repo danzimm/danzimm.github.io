@@ -27,7 +27,7 @@ some day. I'm also curious about data science; 0xFEEDFACF and 0xDEADBEEF are use
   // }}}
 
   // {{{hide and show functions
-  function showSection(j) {
+  function showArticle(j) {
     if (transitioning)
       return;
     var k = 0;
@@ -52,8 +52,8 @@ some day. I'm also curious about data science; 0xFEEDFACF and 0xDEADBEEF are use
           header.classList.add('displaynone');
         }
       })).then(function() {
+        nav.classList.add('displaynone');
         article.classList.remove('displaynone'); 
-      }).then(function() {
         article.classList.remove('hidden'); 
       }).then(Z.delay(articleTransitionDuration)).then(function() {
         transitioning = false;
@@ -61,29 +61,25 @@ some day. I'm also curious about data science; 0xFEEDFACF and 0xDEADBEEF are use
     }
   }
 
-  function hideSections() {
+  function showMenu() {
     if (transitioning)
       return;
     if (selected !== -1) {
       selected = -1;
       transitioning = true;
-      Z.enQ(Z.iterative(elms.length + 1, function(i) {
+      nav.classList.remove('displaynone');
+      Z.enQ(function() {
+        article.classList.add('hidden');
+      }).then(Z.iterative(elms.length + 1, function(i) {
         if (i < elms.length) {
           elms[i].classList.remove('displaynone');
-        } else {
-          header.classList.remove('displaynone');
-        }
-      })).then(Z.iterative(elms.length + 1, function(i) {
-        if (i < elms.length) {
           elms[i].classList.add('showing'); // TODO: unify 'opaque', 'showing', 'hidden'
         } else {
+          header.classList.remove('displaynone');
           header.classList.add('opaque');
         }
-      })).then(function() {
-        article.classList.add('hidden');
-      }).then(function() {
+      })).then(Z.delay(transitionDuration)).then(function() {
         article.classList.add('displaynone');
-      }).then(Z.delay(transitionDuration)).then(function() {
         transitioning = false;
       });
     }
@@ -94,15 +90,15 @@ some day. I'm also curious about data science; 0xFEEDFACF and 0xDEADBEEF are use
   Z.enQ(Z.delay(1000)).then(Z.iterative(document.querySelectorAll('#circle path'), function(elm, cb) {
     elm.style.strokeOpacity = '1';
     SVGHelpers.animatePath(elm, { duration: '1s' }).then(cb);
-  })).then(hideSections);
+  })).then(showMenu);
   //}}}
   
   // {{{initialize click handlers
   Z.enQ(Z.iterative(elms.length, function(j) {
-    elms[j].onclick = showSection.bind(elms[j], j);
+    elms[j].onclick = showArticle.bind(elms[j], j);
   }));
   document.querySelector('main').onclick = function(event) { event.stopPropagation(); };
-  document.onclick = hideSections;
+  document.onclick = showMenu;
   // }}}
 };
 
