@@ -7,6 +7,9 @@ oneoversqrt2 = 0.707106781
 oneminusoneoversqrt2 = 0.292893219
 anilength = 0.8s
 
+html
+  font-size 1vmin
+
 body
   font-family 'Raleway', sans-serif
   color txt-color
@@ -25,15 +28,15 @@ main
   margin-top -(@height / 2)
   margin-left -(@width / 2)
 
-.displaynone
+.hidden
   visibility hidden !important
 
 .button
   display inline-block
   color darken(bg-color, 30)
-  width 21vmin
-  height 7vmin
-  border-radius 0.5vmin
+  width 21rem
+  height 7rem
+  border-radius 0.5rem
   background-color accent-color
   cursor pointer
   opacity 0
@@ -51,7 +54,7 @@ main
     margin 0
     margin-right -50%
     transform translate(-50%, -50%)
-    font-size 3vmin
+    font-size 3rem
     cursor pointer
   &:hover
     background-color darken(bg-color, 30)
@@ -71,11 +74,11 @@ section
     top 14vmin
     left 14vmin
     opacity 0
-    font-size 5vmin
-    margin-top - oneoversqrt2 vmin
-    margin-left oneoversqrt2 vmin
+    font-size 5rem
+    margin-top - oneoversqrt2 rem
+    margin-left oneoversqrt2 rem
     transition opacity anilength ease-in, margin anilength ease-in
-    &.opaque
+    &.showing
       margin-top 0
       margin-left 0
       opacity 1
@@ -87,15 +90,14 @@ section
     margin 0
     margin-right -50%
     transform translate(-50%, -50%)
-    transition transform anilength ease-in-out
     ul
       padding 0
       list-style-type none
       li
         display inline-block
-        margin 2vmin
+        margin 2rem
         &.showing
-          margin 1vmin
+          margin 1rem
   article
     // r = (W - 2M) / 2
     // a^2 = 2(w/2)^2
@@ -113,13 +115,75 @@ section
     width oneoversqrt2 * (square-dimen - 6)
     height @width
     margin auto
-    margin-top square-dimen * oneminusoneoversqrt2 * 0.5 + oneoversqrt2 * 3vmin
-    opacity 1
-    transition opacity (anilength / 3) ease-in-out, transform (anilength / 3) ease-in-out
-    font-size 2.5vmin
+    margin-top square-dimen * oneminusoneoversqrt2 * 0.5 + oneoversqrt2 * 3 rem
+    font-size 2.45 rem
     text-align justify
-    transform none
-    &.hidden
-      opacity 0
-      transform scale(0.8, 0.8)
+    transform scale(0.8, 0.8)
+    opacity 0
+    transition opacity (anilength / 3) ease-in-out, transform (anilength / 3) ease-in-out
+    &.showing
+      opacity 1
+      transform none
+
+@media only all and (max-width: 600px)
+  html
+    padding 0
+    margin 0
+    font-size 0.6em
+  body
+    padding 0
+    margin 0
+  main
+    position static
+    top auto
+    left auto
+    padding 0
+    margin 0
+    width auto
+    height auto
+  main > svg
+    display none
+  section
+    position static
+    margin 0 !important
+    top 0
+    left 0
+    > header 
+      > h1
+        width 100%
+        position static
+        text-align center
+        margin auto
+        padding-top 3rem
+        opacity 1
+        &.hidden
+          visibility visible !important
+        &.showing
+          margin auto
+    nav 
+      width 100%
+      margin 0
+      display block
+      position static
+      transform none
+      ul
+        width 80%
+        margin auto
+        margin-top 3rem
+        li
+          display block
+          width 100% !important
+          margin 1rem auto !important
+          transition opacity anilength ease-in-out !important
+          &.hidden
+            margin 0 !important
+            height 0
+          &.showing
+            margin auto
+            opacity 1
+    article
+      width 80%
+      height auto
+      margin auto
+      padding-bottom 3rem
 
