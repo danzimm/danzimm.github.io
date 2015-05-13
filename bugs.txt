@@ -1,4 +1,3 @@
 
-- when starting in mobile size and expanding ring is not there (js issue)
-- fix touch response - horrible right now
+- fix justify alignment being too tall sometimes and making bad alignment
 

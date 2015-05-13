@@ -30,6 +30,7 @@ main
 
 .hidden
   visibility hidden !important
+  z-index -100
 
 .button
   display inline-block
@@ -144,6 +145,8 @@ section
   main > svg
     display none
   section
+    height auto
+    width auto
     position static
     margin 0 !important
     top 0
@@ -175,6 +178,8 @@ section
           width 100% !important
           margin 1rem auto !important
           transition opacity anilength ease-in-out !important
+          &.transitionfree
+            transition none !important
           &.hidden
             margin 0 !important
             height 0
@@ -186,4 +191,5 @@ section
       height auto
       margin auto
       padding-bottom 3rem
+      font-size 2em
 

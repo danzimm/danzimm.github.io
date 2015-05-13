@@ -6,9 +6,9 @@ window.onload = function() {
   var transitioning = false;
 
   var header = document.querySelector('section header h1');
-  var menuItems = document.querySelectorAll('nav ul li'), i;
+  var menuItems = [].slice.call(document.querySelectorAll('nav ul li')), i;
   var nav = document.querySelector('nav');
-  var frontPageItems = [].slice.call(menuItems).concat(header);
+  var frontPageItems = menuItems.concat(header);
 
   var article = document.querySelector('article');
 
@@ -60,9 +60,10 @@ some day. I'm also curious about data science; 0xFEEDFACF and 0xDEADBEEF are use
     }
   }
 
-  function showMenu() {
+  function showMenu(cb) {
     if (transitioning)
       return;
+    cb = typeof cb === 'function' ? cb : () => {};
     if (selected !== -1) {
       selected = -1;
       transitioning = true;
@@ -77,9 +78,10 @@ some day. I'm also curious about data science; 0xFEEDFACF and 0xDEADBEEF are use
       })).then(Z.delay(transitionDuration)).then(function() {
         article.innerHTML = "";
         transitioning = false;
-      });
+      }).then(cb);
     }
   }
+
   // }}}
   
   // {{{initialize document
@@ -90,7 +92,15 @@ some day. I'm also curious about data science; 0xFEEDFACF and 0xDEADBEEF are use
       SVGHelpers.animatePath(elm, { duration: '1s' }).then(cb);
     })).then(showMenu);
   } else {
-    showMenu(); // TODO: i don't like initial animation on mobile, make it instant
+    F.ListMonad.fmap((elm) => { elm.style.strokeOpacity = '1'; }, [].slice.call(document.querySelectorAll('#circle path')));
+    F.ListMonad.fmap((elm) => { 
+      elm.classList.add('transitionfree');
+      elm.classList.remove('hidden');
+      elm.classList.add('showing'); 
+      elm.offsetHeight;
+      elm.classList.remove('transitionfree');
+    }, frontPageItems);
+    selected = -1;
   }
 
   //}}}

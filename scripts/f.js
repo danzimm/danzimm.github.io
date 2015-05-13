@@ -67,7 +67,7 @@ var F = (function() {
     return [x].concat(xs);
   };
   that.concat = (xs, ys) => {
-    return concat.apply(xs, ys);
+    return [].concat.apply(xs, ys);
   };
   that.flatten = (xs) => {
     F.ListMonad.join(xs);
@@ -106,7 +106,7 @@ var F = (function() {
     };
   });
   that.ListMonad = new that.Monad(that.curry(that.flip(that.cons))([]), function(ma, comp) {
-    return Array.from(ma).map(comp).reduce(F.concat);
+    return ma.map(comp).reduce(F.concat);
   });
 
   return that;
