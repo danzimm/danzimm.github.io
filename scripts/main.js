@@ -2,7 +2,7 @@
 window.onload = function() {
 
   // {{{initialize variables
-  var selected = 1000;
+  var selected = 1337;
   var transitioning = false;
 
   var header = document.querySelector('section header h1');
@@ -110,9 +110,11 @@ some day. I'm also curious about data science; 0xFEEDFACF and 0xDEADBEEF are use
   Z.enQ(Z.iterative(menuItems.length, function(j) {
     menuItems[j].onclick = showArticle.bind(menuItems[j], j);
   }));
-  document.querySelector('main').onclick = function(event) { event.stopPropagation(); };
-  document.onclick = header.onclick = showMenu;
+  F.ListMonad.fmap((elm) => {
+    elm.onclick = F.if(F.compose(F.equal(elm), F.property("target")), showMenu);
+  }, [document.body, header]);
 
   // }}}
+
 };
 

@@ -1,3 +1,5 @@
 
-- fix justify alignment being too tall sometimes and making bad alignment
+- iOS rotate to get desktop mode, cant get back from an article (click event doesnt bubble down to body)
+  - fix this bug w/ workaround
+  - change way back works (add a button or smth)
 
