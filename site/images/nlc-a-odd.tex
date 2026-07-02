@@ -1,0 +1,8 @@
+\documentclass[border=0.5pt]{standalone}
+\input{zmacros.sty}
+\newcommand{\Adisksimpl}[3]{\cal{A}\optsub{#1}\optsup{#2}\optparens{#3}}
+\NewDocumentCommand{\Aodd}{O{} O{z}}{\Adisksimpl{\mathrm{odd}}{#1}{#2}}
+
+\begin{document}
+\(\Aodd\)
+\end{document}

@@ -1,0 +1,242 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{zmacros}[2026/05/08 convenience macros]
+
+%; Packages
+% patchcmd
+\RequirePackage{etoolbox}
+
+% DeclarePairedDelimiter
+\RequirePackage{mathtools}
+
+% mathbb
+\RequirePackage{bbold}
+
+% \upgamma
+\RequirePackage[Symbol]{upgreek}
+
+% \graphicspath, \includegraphics
+\RequirePackage{graphicx}
+
+% All the good stuff
+\RequirePackage{mathtools}
+\RequirePackage{amssymb}
+\RequirePackage{amsmath}
+\RequirePackage{amsthm}
+\RequirePackage{enumitem}
+
+% Index
+\RequirePackage{makeidx}
+
+% Referencing customization
+
+% For ref & hyperlinks
+\RequirePackage[pdfencoding=auto]{hyperref}
+% For aliasing counters for theorems/lemmas/etc
+\RequirePackage{aliascnt}
+% Only show numbers next to equations that are referenced. Requires mathtools.
+% Incompatible with cleveref.
+\mathtoolsset{showonlyrefs}
+
+% bm{} to bold math symbols (better than mathbf bc bolds greek letters)
+\RequirePackage{bm}
+
+% NewDocumentCommand, detokenize
+\RequirePackage{xparse}
+
+% \ifdef
+\RequirePackage{etoolbox}
+
+% \includestandalone
+\RequirePackage[mode=buildnew]{standalone}
+\standaloneconfig{build={%
+  latex={texfot --quiet --tee /dev/null pdflatex},%
+  latexoptions={-interaction=nonstopmode -file-line-error -shell-escape
+    -output-directory=figures -jobname \quote\buildjobname\quote}%
+}}
+
+% subcaption
+\RequirePackage{subcaption}
+
+% centernot
+\RequirePackage{centernot}
+%:
+%; Utilities
+\newcommand\swapifbranches[3]{#1{#3}{#2}}
+\NewDocumentCommand{\optparens}{s m O{}}{%
+  \IfBlankF{#2}{\IfBooleanTF{#1}{\parens*[#3]{#2}}{\parens{#2}}}%
+}
+\NewDocumentCommand{\optsub}{m}{%
+  \IfBlankF{#1}{_{#1}}%
+}
+\NewDocumentCommand{\optsup}{m}{%
+  \IfBlankF{#1}{^{#1}}%
+}
+
+\newenvironment{scopeddefs}{%
+  \begingroup
+}{%
+  \endgroup
+}
+
+\newcommand{\includefigure}[4][width=.8\textwidth]{%
+  \begin{figure}[htbp]%
+    \centering%
+    \includestandalone[build={jobname=#2},#1]{figures/#2}%
+    \caption{#3}%
+    \label{#4}%
+  \end{figure}%
+}
+
+\newcommand{\includesubfigure}[4][height=3cm]{%
+  \subcaptionbox{#3\label{#4}}{%
+    \includestandalone[build={jobname=#2},#1]{figures/#2}%
+  }%
+}
+
+\newcommand{\nobrmath}[1]{\allowbreak\mbox{\ensuremath{#1}}}
+%:
+%; Ref customization
+\let\orgdescriptionlabel\descriptionlabel
+\renewcommand*{\descriptionlabel}[1]{%
+  \let\orglabel\label
+  \let\label\@gobble
+  \phantomsection
+  \edef\@currentlabel{#1}%
+  %\edef\@currentlabelname{#1}%
+  \let\label\orglabel
+  \orgdescriptionlabel{#1}%
+}
+%:
+%; Parens/brackets/etc
+\makeatletter
+
+\MHInternalSyntaxOn
+\patchcmd{\DeclarePairedDelimiter}{\@ifstar}{\swapifbranches\@ifstar}{}{}
+\MHInternalSyntaxOff
+
+\makeatother
+
+% Convenience paired delims
+\DeclarePairedDelimiter\parens{(}{)}
+\DeclarePairedDelimiter\braces{\{}{\}}
+\DeclarePairedDelimiter\bracp{[}{]}
+\DeclarePairedDelimiter\iproddelim{\langle}{\rangle}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\norm{\lVert}{\rVert}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\newcommand{\iprod}[2]{\iproddelim{#1, #2}}
+
+\let\olddot\dot
+\renewcommand{\dot}[2]{{#1}\cdot{#2}}
+\NewDocumentCommand{\pdot}{s m m O{}}{\IfBooleanTF{#1}{\parens*[#4]{\dot{#2}{#3}}}{\parens{\dot{#2}{#3}}}}
+\newcommand{\tprod}[2]{{#1}\otimes{#2}}
+\NewDocumentCommand{\ptprod}{s m m O{}}{\IfBooleanTF{#1}{\parens*[#4]{\tprod{#2}{#3}}}{\parens{\tprod{#2}{#3}}}}
+%:
+%; Symbol customization (gamma, etc)
+
+\makeatletter
+
+\let\oldgamma\gamma
+\renewcommand{\gamma}{\@ifstar{\oldgamma}{\upgamma}}
+\renewcommand{\cal}[1]{\mathcal{#1}}
+\let\oldvec\vec
+\renewcommand{\vec}[1]{\@ifstar{\oldvec{#1}}{\bm{\mathbf{#1}}}}
+\let\oldsubset\subset
+\renewcommand{\subset}{\@ifstar{\oldsubset}{\subseteq}}
+
+\makeatother
+
+%:
+%; Math commands
+
+\NewDocumentCommand{\haus}{m O{}}{\mathcal{H}^{#1}\IfBlankF{#2}{\parens{#2}}}
+\newcommand{\R}[1]{\mathbb{R}^{#1}}
+
+\makeatletter
+\DeclareRobustCommand{\subsetsim}{\mathrel{\mathchoice
+  {\subsetsim@{\displaystyle}{\scriptstyle}{.47\fontdimen5\textfont2}{1.12}{.72}{.050em}{.23\fontdimen5\textfont2}}%
+  {\subsetsim@{\textstyle}{\scriptstyle}{.47\fontdimen5\textfont2}{1.12}{.72}{.050em}{.23\fontdimen5\textfont2}}%
+  {\subsetsim@{\scriptstyle}{\scriptscriptstyle}{.41\fontdimen5\scriptfont2}{1.12}{.72}{.035em}{.20\fontdimen5\scriptfont2}}%
+  {\subsetsim@{\scriptscriptstyle}{\scriptscriptstyle}{.53\fontdimen5\scriptscriptfont2}{1.06}{.70}{.025em}{.22\fontdimen5\scriptscriptfont2}}%
+}}
+\newcommand{\subsetsim@}[7]{%
+  \begingroup
+  \setbox0=\hbox{$\m@th#1\subseteq$}% reference box: same width/height/depth as \subseteq
+  \setbox2=\hbox{$\m@th#1\subset*$}% visible subset glyph
+  \setbox4=\hbox{\scalebox{#4}[#5]{%
+    \ooalign{%
+      \hfil$\m@th#2\sim$\hfil\cr
+      \hfil\kern.025em$\m@th#2\sim$\hfil\cr
+    }%
+  }}% visible squiggle
+  \setbox6=\hbox{%
+    \ooalign{%
+      \hbox to \wd0{\hss\raise#7\copy2\hss}\cr
+      \hbox to \wd0{\hss\kern#6\lower#3\copy4\hss}\cr
+    }%
+  }%
+  \ht6=\ht0 % prevent extra height
+  \dp6=\dp0 % prevent extra depth/line padding
+  \box6
+  \endgroup
+}
+\makeatother
+
+\newcommand{\transv}{\mathrel{\pitchfork}}
+\newcommand{\ntransv}{\mathrel{\centernot\pitchfork}}
+\DeclareMathOperator{\imop}{\mathrm{im}}
+\newcommand{\im}[1]{\imop\parens{#1}}
+\DeclareMathOperator{\domop}{\mathrm{dom}}
+\newcommand{\dom}[1]{\domop\parens{#1}}
+\DeclareMathOperator{\codimop}{\mathrm{codim}}
+\newcommand{\codim}[1]{\codimop\parens{#1}}
+%:
+%; Theorem environments / numbering
+\makeatletter
+\NewDocumentCommand{\newaliastheorem}{m m m m m}{%
+  % #1 = env name, e.g. lemma
+  % #2 = printed heading / uppercase cref singular, e.g. Lemma
+  % #3 = lowercase cref singular, e.g. lemma
+  % #4 = lowercase cref plural, e.g. lemmas
+  % #5 = uppercase cref plural, e.g. Lemmas
+  \newaliascnt{#1}{theorem}%
+  \newtheorem{#1}[#1]{#2}%
+  \aliascntresetthe{#1}%
+  %\crefname{#1}{#3}{#4}%
+  %\Crefname{#1}{#2}{#5}%
+  \expandafter\gdef\csname #1autorefname\endcsname{#2}%
+}
+\makeatother
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+
+\newaliastheorem{lemma}{Lemma}{lemma}{lemmas}{Lemmas}
+\newaliastheorem{corollary}{Corollary}{corollary}{corollaries}{Corollaries}
+\newaliastheorem{proposition}{Proposition}{proposition}{propositions}{Propositions}
+\newaliastheorem{example}{Example}{example}{examples}{Examples}
+\newaliastheorem{definition}{Definition}{definition}{definitions}{Definitions}
+
+\newtheorem{axiom}{Axiom}
+\newtheorem{assumption}{Assumption}
+\newtheorem{notation}{Notation}
+
+\theoremstyle{remark}
+\newaliastheorem{remark}{Remark}{remark}{remarks}{Remarks}
+%
+
+\numberwithin{equation}{section}
+\newcommand{\secref}[1]{\hyperref[#1]{Section~\ref*{#1}}}
+%:
+%; Custom ops
+\DeclareMathOperator{\spanop}{span}
+
+\NewDocumentCommand{\zmod}{m}{\textrm{ mod } #1}
+\newcommand{\nequiv}{\not\equiv}
+%:
+%; Annotations
+\newcommand{\cred}[1]{{\color{red} #1}}
+\newcommand{\cblue}[1]{{\color{blue} #1}}
+\newcommand{\cpurp}[1]{{\color{purple} #1}}
+\newcommand{\fnblue}[1]{\cblue{\footnotemark}\footnotetext{\cblue{#1}}}
+%:
