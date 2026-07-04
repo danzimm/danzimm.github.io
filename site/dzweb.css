@@ -221,6 +221,26 @@ main section h1 svg {
   --math-inline-height: 0.98em;
 }
 
+.math-inline--center-term {
+  --math-inline-align: -0.086em;
+  --math-inline-height: 0.64rem;
+}
+
+.math-inline--vector-term {
+  --math-inline-align: -0.006em;
+  --math-inline-height: 0.69rem;
+}
+
+.math-inline--radius-term {
+  --math-inline-align: -0.017em;
+  --math-inline-height: 0.53rem;
+}
+
+.math-inline--point-term {
+  --math-inline-align: -0.017em;
+  --math-inline-height: 0.69rem;
+}
+
 .math-inline--pv {
   --math-inline-align: -0.225em;
   --math-inline-height: 0.74rem;
