@@ -131,6 +131,34 @@ main section h1 svg {
   margin-block: 1rem;
 }
 
+.academic-formation {
+  grid-template-areas:
+    "rail label"
+    "rail body";
+}
+
+.academic-formation .section-label {
+  grid-area: label;
+}
+
+.academic-formation .luc-mark {
+  grid-area: rail;
+}
+
+.academic-formation .two-column__body {
+  grid-area: body;
+}
+
+.academic-project-meta__title {
+  color: var(--body-color);
+  font-style: italic;
+  font-weight: 600;
+}
+
+.academic-project-meta__timespan {
+  white-space: nowrap;
+}
+
 .luc-mark {
   background: transparent;
   box-shadow: none;
@@ -412,6 +440,46 @@ main section.academic h1 {
 
   #google-logo svg {
     height: 1.38rem;
+  }
+
+  .section-label,
+  .two-column__rail--sticky {
+    background: var(--body-bg);
+    --sticky-title-bg-transparent: rgba(56, 59, 60, 0);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+
+  .section-label::after,
+  .two-column__rail--sticky::after {
+    background: linear-gradient(180deg, var(--body-bg) 0%, var(--sticky-title-bg-transparent) 100%);
+    bottom: -0.75rem;
+    content: "";
+    height: 0.75rem;
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+  }
+
+  .section-label {
+    margin-left: -1rem;
+    margin-right: -1rem;
+    padding: 0.55rem 1rem 0;
+  }
+
+  .two-column__rail--sticky {
+    padding-top: 0.55rem;
+    padding-bottom: 0;
+  }
+
+}
+
+@media (max-width: 800px) and (prefers-color-scheme: light) {
+  .section-label,
+  .two-column__rail--sticky {
+    --sticky-title-bg-transparent: rgba(248, 249, 249, 0);
   }
 }
 
