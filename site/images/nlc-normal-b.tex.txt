@@ -1,0 +1,7 @@
+\documentclass[border=0.5pt]{standalone}
+\input{zmacros.sty}
+\newcommand{\bb}{\vec{b}}
+
+\begin{document}
+\(\bb\)
+\end{document}
