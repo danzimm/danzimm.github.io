@@ -1,5 +1,5 @@
 .logo-white {
-  fill: white;
+  fill: var(--logo-white-fill);
 }
 
 .home-mark {
@@ -11,16 +11,32 @@
   text-align: right;
 }
 
+:root {
+  --logo-white-fill: #ffffff;
+  --projectvision-logo-fill: currentColor;
+  --adyen-logo-fill: #0abf53;
+  --academic-heading-color: #449f97;
+  --academic-interests-border-color: rgba(56, 59, 60, 0.12);
+  --sticky-title-bg-transparent: rgba(56, 59, 60, 0);
+}
+
 @media (prefers-color-scheme: light) {
-  .logo-white {
-    fill: #383b3c;
+  :root {
+    --logo-white-fill: #383b3c;
+    --sticky-title-bg-transparent: rgba(248, 249, 249, 0);
   }
 }
 
 @media (prefers-color-scheme: dark) {
+  :root {
+    --projectvision-logo-fill: #9bd4e5;
+    --academic-heading-color: #48aaa1;
+    --academic-interests-border-color: rgba(255, 255, 255, 0.08);
+  }
+
   #projectvision-logo [id="Project"],
   #projectvision-logo [id="VISION"] {
-    fill: #9bd4e5;
+    fill: var(--projectvision-logo-fill);
   }
 }
 
@@ -102,7 +118,7 @@ main section h1 svg {
 }
 
 #adyen-logo svg path {
-  fill: #0abf53;
+  fill: var(--adyen-logo-fill);
 }
 
 #fb-logo svg {
@@ -305,7 +321,7 @@ main section h1 svg {
 }
 
 .academic-interests .desc {
-  border-top: 1px solid rgba(56, 59, 60, 0.12);
+  border-top: 1px solid var(--academic-interests-border-color);
   padding-top: 1.1rem;
 }
 
@@ -315,8 +331,8 @@ main section:first-child.academic-interests .desc {
 }
 
 main section.academic h1 {
-  color: #449f97;
-  --element-color: #449f97;
+  color: var(--academic-heading-color);
+  --element-color: var(--academic-heading-color);
 }
 
 .academic .entry + .entry {
@@ -328,11 +344,6 @@ main section.academic h1 {
 }
 
 @media (prefers-color-scheme: dark) {
-  main section.academic h1 {
-    color: #48aaa1;
-    --element-color: #48aaa1;
-  }
-
   .luc-mark {
     background: transparent;
     box-shadow: none;
@@ -341,10 +352,6 @@ main section.academic h1 {
   .academic-figure {
     background: transparent;
     box-shadow: none;
-  }
-
-  .academic-interests .desc {
-    border-top-color: rgba(255, 255, 255, 0.08);
   }
 
   .research-entry .interests-figure img {
@@ -459,7 +466,6 @@ main section.academic h1 {
   .section-label,
   .two-column__rail--sticky {
     background: var(--body-bg);
-    --sticky-title-bg-transparent: rgba(56, 59, 60, 0);
     position: sticky;
     top: 0;
     z-index: 20;
@@ -488,13 +494,6 @@ main section.academic h1 {
     padding-bottom: 0;
   }
 
-}
-
-@media (max-width: 800px) and (prefers-color-scheme: light) {
-  .section-label,
-  .two-column__rail--sticky {
-    --sticky-title-bg-transparent: rgba(248, 249, 249, 0);
-  }
 }
 
 @media (min-width: 801px) {
