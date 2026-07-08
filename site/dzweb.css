@@ -14,7 +14,6 @@
 :root {
   --brand-logo-white-fill: #ffffff;
   --brand-adyen-logo-fill: #0abf53;
-  --color-academic-interests-border: rgba(56, 59, 60, 0.12);
   --effect-sticky-title-bg-transparent: rgba(56, 59, 60, 0);
 }
 
@@ -22,12 +21,6 @@
   :root {
     --brand-logo-white-fill: #383b3c;
     --effect-sticky-title-bg-transparent: rgba(248, 249, 249, 0);
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-academic-interests-border: rgba(255, 255, 255, 0.08);
   }
 }
 
@@ -291,16 +284,6 @@
   .math-inline--pv {
     --layout-math-inline-align: -0.225em;
   }
-}
-
-.academic-interests .desc {
-  border-top: 1px solid var(--color-academic-interests-border);
-  padding-top: 1.1rem;
-}
-
-main section:first-child.academic-interests .desc {
-  border-top: 0;
-  padding-top: 0;
 }
 
 .luc-mark .luc-logo-dark {
