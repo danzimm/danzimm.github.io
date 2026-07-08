@@ -2,6 +2,7 @@ sitegen/
 .codex/
 .codexbk/
 .codex-screenshots/
+.codex-scenarios/
 ingest/
 tmp/
 hpp/.venv/

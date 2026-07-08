@@ -11,6 +11,7 @@
 - After each source change, wait for the watcher to finish processing the affected files before reviewing or taking screenshots. Confirm the generated `sitegen/` file reflects the edit, or wait for the watcher output showing the relevant file was written.
 - Visually inspect affected pages through the watcher server at desktop and mobile widths before handoff.
 - When taking webpage screenshots, use `scripts/screenshot-codex.sh` and save files under `.codex-screenshots/`.
+- Put local Playwright/inspector scenario JSON files under `.codex-scenarios/`; the folder is gitignored so these reusable automation inputs can be edited with normal workspace patches without being committed.
 
 ## JavaScript-free requirement
 
